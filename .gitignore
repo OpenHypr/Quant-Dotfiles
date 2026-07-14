@@ -32,5 +32,8 @@
 !eww/
 !eww/**
 
+!swaync/
+!swaync/**
+
 !.gitignore
 !README.md

@@ -1,0 +1,532 @@
+/* =========================
+   Theme: swaync
+   Palette: .config/color.css
+   ========================= */
+
+@define-color bg     #16161D;
+@define-color bg2    #1A1A26;
+@define-color fg     #d5c89a;
+@define-color fg2    #b6b09e;
+@define-color accent #89b4fa;
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 12px;
+}
+
+/* ---------- Control Center ---------- */
+
+.control-center {
+  background: alpha(@bg, 0.50);
+  color: @fg;
+  border-radius: 5px;
+  border: 1px solid alpha(@fg2, 0.12);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3),
+              0 4px 16px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Hilangkan focus outline di semua elemen */
+.control-center *:focus,
+.control-center *:focus-visible,
+.notification-row:focus,
+.notification-row *:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: inherit;
+}
+
+.control-center .control-center-list-placeholder {
+  color: @fg2;
+  opacity: 0.5;
+}
+
+/* ---------- Notifications ---------- */
+
+.notification-row,
+.notification-row:focus,
+.notification-row:focus-visible {
+  outline: none;
+  background: @bg2;
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.notification-row:focus {
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+}
+
+.notification-row .notification-background {
+  background: transparent;
+  padding: 1px;
+  outline: none;
+}
+
+.notification-row .notification-background:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.notification-row .notification-background .notification {
+  border-radius: 5px;
+  border: 1px solid alpha(@fg2, 0.10);
+  background: @bg2;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.notification-row .notification-background .notification:hover {
+  background: alpha(@bg2, 0.82);
+  border-color: alpha(@fg2, 0.18);
+}
+
+.notification-row .notification-background .notification.critical {
+  border-color: alpha(@fg2, 0.10);
+}
+
+/* ---------- Default action area ---------- */
+
+.notification-default-action {
+  padding: 4px;
+  margin: 0;
+  background: transparent;
+  border: none;
+  color: @fg;
+  transition: all 0.18s ease;
+  border-radius: 5px;
+}
+
+.notification-default-action:hover {
+  background: alpha(@accent, 0.06);
+}
+
+.notification-default-action:not(:only-child) {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ---------- Notification content ---------- */
+
+.notification-content {
+  background: transparent;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+.notification-content .image {
+  -gtk-icon-size: 52px;
+  border-radius: 100px;
+  margin: 4px;
+}
+
+.notification-content .app-icon {
+  -gtk-icon-size: 18px;
+  margin: 6px;
+}
+
+.notification-content .text-box .summary {
+  font-size: 14px;
+  font-weight: bold;
+  color: @fg;
+  background: transparent;
+  text-shadow: none;
+}
+
+.notification-content .text-box .time {
+  font-size: 12px;
+  font-weight: normal;
+  color: @fg2;
+  background: transparent;
+  margin-right: 30px;
+}
+
+.notification-content .text-box .body {
+  font-size: 12px;
+  font-weight: normal;
+  color: @fg2;
+  background: transparent;
+}
+
+/* ---------- Close button ---------- */
+
+.close-button {
+  background: alpha(@fg2, 0.10);
+  color: @fg2;
+  border-radius: 100%;
+  min-width: 24px;
+  min-height: 24px;
+  margin-top: 6px;
+  margin-right: 6px;
+  padding: 0;
+  border: none;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.close-button:hover {
+  background: alpha(@accent, 0.25);
+  color: @fg;
+  transition: all 0.18s ease;
+}
+
+/* ---------- Action buttons ---------- */
+
+.notification-action {
+  margin: 4px;
+  padding: 0;
+}
+
+.notification-action > button {
+  border-radius: 8px;
+  color: @fg;
+  background: alpha(@fg2, 0.08);
+  border: none;
+  padding: 6px 10px;
+  transition: all 0.18s ease;
+}
+
+.notification-action > button:hover {
+  background: alpha(@accent, 0.18);
+  color: @accent;
+}
+
+/* ---------- Inline reply ---------- */
+
+.inline-reply {
+  margin-top: 4px;
+}
+
+.inline-reply .inline-reply-entry {
+  background: alpha(@bg, 0.8);
+  color: @fg;
+  border: 1px solid alpha(@fg2, 0.12);
+  border-radius: 8px;
+  padding: 6px 8px;
+  caret-color: @accent;
+}
+
+.inline-reply .inline-reply-button {
+  background: alpha(@accent, 0.15);
+  border: none;
+  border-radius: 8px;
+  color: @accent;
+  margin-left: 4px;
+  padding: 6px 12px;
+}
+
+.inline-reply .inline-reply-button:hover {
+  background: alpha(@accent, 0.30);
+}
+
+.inline-reply .inline-reply-button:disabled {
+  background: alpha(@fg2, 0.05);
+  color: @fg2;
+}
+
+/* ---------- Notification groups ---------- */
+/* Grouping disabled — semua notifikasi selalu terlihat individual */
+
+.notification-group {
+  background: transparent;
+}
+
+.notification-group:focus {
+  background: transparent;
+}
+
+.notification-group .notification-group-headers {
+  background: @fg;
+  color: @bg;
+  margin: 10px 0 10px 0;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+.notification-group .notification-group-headers .notification-group-icon {
+  color: @bg;
+  -gtk-icon-size: 16px;
+}
+
+.notification-group .notification-group-headers .notification-group-header {
+  color: @bg;
+  font-size: 11px;
+}
+
+/* Group close & view buttons — posisi kanan */
+.notification-group .notification-group-close-button {
+  margin-left: auto;
+}
+
+.notification-group .notification-group-close-button .close-button {
+  min-width: 18px;
+  min-height: 18px;
+  margin: 0 2px;
+  background: alpha(@bg, 0.12);
+  color: @bg;
+  border-radius: 100%;
+}
+
+.notification-group .notification-group-close-button .close-button:hover {
+  background: alpha(@bg, 0.25);
+}
+
+.notification-group .notification-group-buttons {
+  margin: 0 2px;
+}
+
+.notification-group .notification-group-buttons button {
+  min-width: auto;
+  min-height: 18px;
+  padding: 2px 10px;
+  font-size: 10px;
+  border-radius: 4px;
+  background: alpha(@bg, 0.12);
+  color: @bg;
+  border: none;
+}
+
+.notification-group .notification-group-buttons button:hover {
+  background: alpha(@bg, 0.25);
+}
+
+/* Override collapsed state — tampilkan semua notifikasi */
+.notification-group.collapsed .notification-row .notification {
+  background: @bg2;
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) .notification-action,
+.notification-group.collapsed .notification-row:not(:last-child) .notification-default-action {
+  opacity: 1;
+}
+
+.notification-group.collapsed .notification-row:not(:last-child) {
+  opacity: 1;
+}
+
+.notification-group.collapsed.not-expanded {
+  opacity: 1;
+}
+
+/* ---------- Floating notifications ---------- */
+
+.floating-notifications {
+  background: transparent;
+}
+
+.floating-notifications .notification {
+  box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* ---------- Blank window ---------- */
+
+.blank-window,
+notificationwindow,
+blankwindow {
+  background: transparent;
+}
+
+/* ---------- Progress bar ---------- */
+
+.notification-content progressbar {
+  margin-top: 4px;
+}
+
+.notification-content progressbar trough {
+  background: alpha(@fg2, 0.12);
+  border-radius: 4px;
+  min-height: 4px;
+}
+
+.notification-content progressbar progress {
+  background: @accent;
+  border-radius: 4px;
+}
+
+/* ---------- Widgets ---------- */
+
+.widget {
+  margin: 0 8px;
+  padding: 2px;
+  border-radius: 10px;
+}
+
+/* Title widget */
+.widget-title {
+  margin: 0 8px;
+  padding: 1px 10px;
+}
+
+.widget-title > label {
+  color: @fg;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.widget-title > button {
+  background: alpha(@fg2, 0.10);
+  color: @fg2;
+  border-radius: 8px;
+  margin-left: 8px;
+  padding: 4px 10px;
+}
+
+.widget-title > button:hover {
+  background: alpha(@accent, 0.20);
+  color: @accent;
+}
+
+/* DND widget */
+.widget-dnd {
+  margin: 0 8px;
+  padding: 1px 10px;
+  border-radius: 5px;
+  background: @bg2;
+}
+
+.widget-dnd > label {
+  color: @fg2;
+  font-size: 13px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.widget-dnd > switch {
+  border-radius: 100px;
+  background: alpha(@fg2, 0.15);
+  border: none;
+  margin-right: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  min-width: 32px;
+  min-height: 16px;
+  font-size: 0;
+}
+
+.widget-dnd > switch:checked {
+  background: @accent;
+}
+
+.widget-dnd > switch slider {
+  border-radius: 100px;
+  background: @fg;
+  box-shadow: none;
+
+  min-width: 10px;
+  min-height: 10px;
+
+}
+
+/* Label widget */
+.widget-label > label {
+  color: @fg2;
+  font-size: 1.1rem;
+}
+
+/* Inhibitors widget */
+.widget-inhibitors > label {
+  color: @fg;
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.widget-inhibitors > button {
+  background: alpha(@accent, 0.15);
+  color: @accent;
+  border-radius: 8px;
+  margin-left: 8px;
+  padding: 4px 10px;
+  border: none;
+}
+
+.widget-inhibitors > button:hover {
+  background: alpha(@accent, 0.28);
+}
+
+/* Buttons grid widget */
+.widget-buttons-grid flowboxchild > button {
+  background: alpha(@bg2, 0.8);
+  color: @fg;
+  border-radius: 10px;
+  border: 1px solid alpha(@fg2, 0.10);
+  padding: 8px;
+  transition: all 0.18s ease;
+}
+
+.widget-buttons-grid flowboxchild > button:hover {
+  background: alpha(@accent, 0.12);
+  border-color: alpha(@accent, 0.25);
+}
+
+.widget-buttons-grid flowboxchild > button.toggle:checked {
+  background: alpha(@accent, 0.20);
+  border-color: @accent;
+  color: @accent;
+}
+
+/* Mpris widget */
+.widget-mpris .widget-mpris-player {
+  margin: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay {
+  padding: 14px;
+  background-color: alpha(@bg, 0.75);
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
+  border-radius: 8px;
+  -gtk-icon-size: 96px;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-title {
+  color: @fg;
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-subtitle {
+  color: @fg2;
+  font-size: 0.5rem;
+}
+
+.widget-mpris .widget-mpris-player .mpris-overlay button:hover {
+  background: alpha(@accent, 0.18);
+}
+
+/* ---------- DND widget ---------- */
+
+.widget-dnd {
+  margin: 8px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  background: @bg2;
+}
+
+/* Volume / Backlight sliders */
+.widget-slider label {
+  color: @fg2;
+  font-size: inherit;
+}
+
+/* Scrollbar */
+.control-center .control-center-list scrollbar trough {
+  background: transparent;
+  border-radius: 4px;
+}
+
+.control-center .control-center-list scrollbar slider {
+  background: alpha(@fg2, 0.18);
+  border-radius: 4px;
+  min-width: 4px;
+}
+
+.control-center .control-center-list scrollbar slider:hover {
+  background: alpha(@fg2, 0.30);
+}
