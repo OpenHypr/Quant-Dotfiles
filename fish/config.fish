@@ -28,3 +28,9 @@ set fish_cursor_insert line
 
 # PATH tambahan
 fish_add_path ~/.local/bin
+set -gx PATH $HOME/.npm-global/bin $PATH
+alias broo="~/.claude/claude.sh"
+
+# mimocode
+fish_add_path /home/xuanz/.mimocode/bin
+set -gx PATH $HOME/.npm-global/bin $PATH

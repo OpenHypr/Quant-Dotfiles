@@ -1,191 +1,66 @@
-;; =========================================================
-;; EWW CONTROL CENTER
-;; ~/.config/eww/eww.yuck
-;; =========================================================
+; ============================================================
+; EWW OSD - Popup Volume & Brightness
+; Layout: [icon persentase] [======bar======]
+; Bar pakai CSS gradient (hindari bug horizontal box EWW 0.5)
+; ============================================================
 
-(include "./media-popup/media-popup.yuck")
-(include "./disk-popup/disk-popup.yuck")
-(include "./calendar-popup/calendar-popup.yuck")
+(defvar osd_icon "")
+(defvar osd_value "0")
+(defvar osd_progress "0")
 
-;; ── Control center ────────────────────────────────────
-
-(defwindow controlcenter
+(defwindow osd
   :monitor 0
   :geometry (geometry
-    :x "20px"
-    :y "20px"
-    :width "380px"
-    :height "720px"
-    :anchor "top right")
+    :x "50%"
+    :y "5"
+    :width "240"
+    :height "1"
+    :anchor "bottom center"
+  )
+  :stacking "overlay"
+  :namespace "osd"
+  :windowtype "dock"
+  :focusable false
 
-  :stacking "fg"
-  :exclusive false
+  (osd-content)
+)
 
+(defwidget osd-content []
   (box
-    :orientation "v"
-    :class "control-center"
-    :spacing 20
+    :class "osd-container"
+    :orientation "horizontal"
+    :spacing 0
+    :halign "center"
+    :valign "center"
 
-    ;; =====================================================
-    ;; HEADER
-    ;; =====================================================
-
-    (label
-      :class "title"
-      :text "Control Center")
-
-    ;; =====================================================
-    ;; QUICK TOGGLES 3x3
-    ;; =====================================================
-
+    ; Kiri: [icon] [persentase]
     (box
-      :orientation "v"
-      :spacing 10
+      :orientation "horizontal"
+      :spacing 1
+      :halign "start"
+      :valign "left"
 
-      ;; ROW 1
-      (box
-        :spacing 10
+      (label
+        :class "osd-icon"
+        :text "${osd_icon}"
+        :width 1
+      )
 
-        (button
-          :class "toggle-btn"
-          :onclick "nmcli radio wifi off || nmcli radio wifi on"
-          "󰖩")
+      (label
+        :class "osd-value"
+        :text "${osd_value}%"
+        :width 30
+        :wrap false
+      )
+    )
 
-        (button
-          :class "toggle-btn"
-          :onclick "bluetoothctl power off || bluetoothctl power on"
-          "󰂯")
-
-        (button
-          :class "toggle-btn"
-          :onclick "hyprshade on blue-light-filter"
-          "󰌵"))
-
-      ;; ROW 2
-      (box
-        :spacing 10
-
-        (button
-          :class "toggle-btn"
-          :onclick "hyprlock"
-          "󰌾")
-
-        (button
-          :class "toggle-btn"
-          :onclick "pamixer -t"
-          "󰖁")
-
-        (button
-          :class "toggle-btn"
-          :onclick "hyprpicker -a"
-          "󰈊"))
-
-      ;; ROW 3
-      (box
-        :spacing 10
-
-        (button
-          :class "toggle-btn"
-          :onclick "hyprctl reload"
-          "󰑓")
-
-        (button
-          :class "toggle-btn"
-          :onclick "wlogout"
-          "󰐥")
-
-        (button
-          :class "toggle-btn"
-          :onclick "hyprctl dispatch togglefloating active"
-          "󰹑")))
-
-    ;; =====================================================
-    ;; BRIGHTNESS
-    ;; =====================================================
-
+    ; Kanan: progress bar (CSS gradient, tanpa child biar width akurat)
     (box
-      :orientation "v"
-      :spacing 8
-
-      (label
-        :class "section-title"
-        :text "Brightness")
-
-      (scale
-        :min 0
-        :max 100
-        :value 50
-        :onchange "brightnessctl set {}%"))
-
-    ;; =====================================================
-    ;; VOLUME
-    ;; =====================================================
-
-    (box
-      :orientation "v"
-      :spacing 8
-
-      (label
-        :class "section-title"
-        :text "Volume")
-
-      (scale
-        :min 0
-        :max 100
-        :value 50
-        :onchange "pamixer --set-volume {}"))
-
-    ;; =====================================================
-    ;; MEDIA PLAYER
-    ;; =====================================================
-
-    (box
-      :orientation "v"
-      :class "media-box"
-      :spacing 10
-
-      (label
-        :class "section-title"
-        :text "Now Playing")
-
-      (label
-        :class "media-text"
-        :text "playerctl metadata title || echo 'Nothing Playing'")
-
-      (box
-        :spacing 10
-
-        (button
-          :class "media-btn"
-          :onclick "playerctl previous"
-          "󰒮")
-
-        (button
-          :class "media-btn"
-          :onclick "playerctl play-pause"
-          "󰐎")
-
-        (button
-          :class "media-btn"
-          :onclick "playerctl next"
-          "󰒭")))
-
-    ;; =====================================================
-    ;; NOTIFICATION PLACEHOLDER
-    ;; =====================================================
-
-    (box
-      :orientation "v"
-      :class "notif-box"
-      :spacing 10
-
-      (label
-        :class "section-title"
-        :text "Notifications")
-
-      (label
-        :class "notif-text"
-        :text "SwayNC running..."))
-
+      :class "osd-bar"
+      :hexpand true
+      :height 10
+      :valign "center"
+      :style "background: linear-gradient(to right, #89b4fa 0%, #89b4fa ${osd_progress}%, rgba(26,26,38,0.65) ${osd_progress}%); border-radius: 2px;"
+    )
   )
 )
