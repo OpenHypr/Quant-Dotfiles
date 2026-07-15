@@ -1,0 +1,22 @@
+; ============================================================
+; Progress Bar — komponen reusable
+; Pakai CSS gradient linear biar akurat (hindari bug horizontal box EWW 0.5)
+;
+; Usage: (progress-bar :value var_name :height 10)
+;        var_name TANPA quotes — langsung reference ke defvar
+; ============================================================
+
+(defwidget progress-bar [value height]
+  (box
+    :class "osd-bar"
+    :hexpand true
+    :height height
+    :valign "center"
+    :style "background: linear-gradient(
+      to right,
+      #89b4fa 0%,
+      #89b4fa ${value}%,
+      rgba(26,26,38,0.65) ${value}%
+    ); border-radius: 2px;"
+  )
+)

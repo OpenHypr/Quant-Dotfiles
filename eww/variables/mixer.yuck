@@ -1,0 +1,5 @@
+; ============================================================
+; Variabel Volume Mixer — daftar aplikasi yang sedang muter audio
+; ============================================================
+
+(deflisten mixer_apps :initial "[]" "scripts/mixer/watch.sh")

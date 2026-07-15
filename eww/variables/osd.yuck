@@ -1,0 +1,7 @@
+; ============================================================
+; Variabel OSD — volume & brightness
+; ============================================================
+
+(defvar osd_icon "")
+(defvar osd_value "0")
+(defvar osd_progress "0")

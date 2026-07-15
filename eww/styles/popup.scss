@@ -1,0 +1,17 @@
+// ============================================================
+// Base Style — semua popup/OSD
+// NOTE: ga perlu @import di sini, variabel global via eww.scss
+// ============================================================
+
+* {
+  all: unset;
+  font-family: $font-family;
+  font-size: $font-size-base;
+}
+
+.popup {
+  background: $bg;
+  border: 0.5px solid $border;
+  border-radius: $border-radius;
+  padding: $padding-default;
+}

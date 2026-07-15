@@ -1,66 +1,19 @@
 ; ============================================================
-; EWW OSD - Popup Volume & Brightness
-; Layout: [icon persentase] [======bar======]
-; Bar pakai CSS gradient (hindari bug horizontal box EWW 0.5)
+; EWW Entry Point — jangan taruh widget di sini
+; Tambah modul baru tinggal include di bawah
 ; ============================================================
 
-(defvar osd_icon "")
-(defvar osd_value "0")
-(defvar osd_progress "0")
+; --- Variables ---
+(include "./variables/osd.yuck")
 
-(defwindow osd
-  :monitor 0
-  :geometry (geometry
-    :x "50%"
-    :y "5"
-    :width "240"
-    :height "1"
-    :anchor "bottom center"
-  )
-  :stacking "overlay"
-  :namespace "osd"
-  :windowtype "dock"
-  :focusable false
+; --- Common Widgets ---
+(include "./widgets/common/progress_bar.yuck")
 
-  (osd-content)
-)
+; --- OSD (Volume & Brightness) ---
+(include "./widgets/osd/osd_widget.yuck")
+(include "./widgets/osd/osd_window.yuck")
 
-(defwidget osd-content []
-  (box
-    :class "osd-container"
-    :orientation "horizontal"
-    :spacing 0
-    :halign "center"
-    :valign "center"
-
-    ; Kiri: [icon] [persentase]
-    (box
-      :orientation "horizontal"
-      :spacing 1
-      :halign "start"
-      :valign "left"
-
-      (label
-        :class "osd-icon"
-        :text "${osd_icon}"
-        :width 1
-      )
-
-      (label
-        :class "osd-value"
-        :text "${osd_value}%"
-        :width 30
-        :wrap false
-      )
-    )
-
-    ; Kanan: progress bar (CSS gradient, tanpa child biar width akurat)
-    (box
-      :class "osd-bar"
-      :hexpand true
-      :height 10
-      :valign "center"
-      :style "background: linear-gradient(to right, #89b4fa 0%, #89b4fa ${osd_progress}%, rgba(26,26,38,0.65) ${osd_progress}%); border-radius: 2px;"
-    )
-  )
-)
+; --- Volume Mixer ---
+(include "./variables/mixer.yuck")
+(include "./widgets/mixer/mixer_widget.yuck")
+(include "./widgets/mixer/mixer_window.yuck")

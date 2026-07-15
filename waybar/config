@@ -71,7 +71,7 @@
         "format-paused": "  {title}",
         "max-length": 30,
         "tooltip": false,
-        "on-click": "~/.config/eww/scripts/media-info.sh && eww open --toggle media_popup"
+        "on-click": "eww -c ~/.config/eww-media open --toggle media_popup"
     },
 
     "clock": {
@@ -93,7 +93,9 @@
         "modules": [
             "wireplumber",
             "pulseaudio"
-        ]
+        ],
+
+        "on-click": "sh -c 'eww active-windows | grep -q mixer: && eww close mixer || eww open mixer'"
     },
 
     "wireplumber": {

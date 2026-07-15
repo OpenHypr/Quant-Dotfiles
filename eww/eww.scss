@@ -1,29 +1,11 @@
-* {
-  all: unset;
-  font-family: "JetBrainsMono Nerd Font";
-  font-size: 10px;
-}
+// ============================================================
+// EWW SCSS Entry Point — import semua modul di sini
+// NOTE: pakai @import, bukan @use (grass compiler EWW ga support @use)
+// ============================================================
 
-.osd-container {
-  background: rgba(26, 26, 38, 0.551);
-  border: 0.5px solid #474540;
-  border-radius: 5px;
-  padding: 8px 12px;
-  min-width: 300px;
-}
+@import "styles/colors";
+@import "styles/variables";
 
-.osd-icon {
-  color: #d5c89a;
-  font-size: 13px;
-}
-
-.osd-value {
-  color: #d5c89a;
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.osd-bar {
-  margin-left: -80px;
-  margin-right: 10px;
-}
+@import "styles/popup";
+@import "styles/osd";
+@import "styles/mixer";
