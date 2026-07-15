@@ -37,3 +37,8 @@
 
 !.gitignore
 !README.md
+
+# Claude-generated docs — jangan di-track
+eww/CLAUDE.md
+
+# Obsidian workspace — auto-generated

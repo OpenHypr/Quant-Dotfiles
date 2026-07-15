@@ -20,7 +20,7 @@
   "timeout-critical": 0,
   "fit-to-screen": true,
   "relative-timestamps": true,
-  "control-center-width": 420,
+  "control-center-width": 400,
   "control-center-height": 600,
   "notification-window-width": 360,
   "keyboard-shortcuts": true,

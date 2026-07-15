@@ -1,12 +1,14 @@
 /* =========================
    Theme: swaync
-   Palette: .config/color.css
+   Palette: knowledge-graph/themes/default-palette.md
    ========================= */
 
-@define-color bg     #16161D;
-@define-color bg2    #1A1A26;
-@define-color fg     #d5c89a;
-@define-color fg2    #b6b09e;
+@define-color bg #1a1a26;
+@define-color bg2 #1a1a26;
+@define-color surface-dark #11111b;
+@define-color border #474540;
+@define-color fg #d5c89a;
+@define-color fg2 rgba(213, 200, 154, 0.5);
 @define-color accent #89b4fa;
 
 * {
@@ -388,7 +390,7 @@ blankwindow {
 }
 
 .widget-dnd > label {
-  color: @fg2;
+  color: @fg;
   font-size: 13px;
   font-weight: bold;
   margin-left: 10px;
@@ -402,7 +404,7 @@ blankwindow {
   margin-top: 5px;
   margin-bottom: 5px;
   min-width: 32px;
-  min-height: 16px;
+  min-height/re: 16px;
   font-size: 0;
 }
 

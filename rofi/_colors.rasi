@@ -1,0 +1,15 @@
+// ============================================================
+// Palet Warna — Catppuccin Mocha + tweak
+// Single source: knowledge-graph/themes/default-palette.md
+// Format Rofi: #RRGGBBAA (8-digit hex)
+// ============================================================
+
+bg:       #1a1a268c;
+bg-solid: #1a1a26ff;
+surface-dark: #11111bff;
+border:   #474540ff;
+fg:       #d5c89aff;
+fg-50:    #d5c89a80;
+accent:   #89b4faff;
+accent-50:#89b4fa80;
+bar-bg:   #555555ff;

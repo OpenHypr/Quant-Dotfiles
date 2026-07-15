@@ -8,11 +8,11 @@ configuration {
 }
 
 * {
-    bg: #1a1a26de;
+    bg: #1a1a268c;
     bg-alt: #2a2a51aa;
-    fg: #b6b09e;
-    fg2: #d6c587;
-    border: #a7ada034;
+    fg: #d5c89a;
+    fg2: #b6b09e;
+    border: #474540;
 
     background-color: transparent;
     text-color: @fg;
@@ -24,7 +24,7 @@ window {
     border: 1px;
     border-color: @border;
     border-radius: 5px;
-    background-color: #1a1a26de;
+    background-color: @bg;
     padding: 15px;
 
 }

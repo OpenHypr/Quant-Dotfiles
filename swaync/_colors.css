@@ -1,0 +1,15 @@
+// ============================================================
+// Palet Warna — Catppuccin Mocha + tweak
+// Single source: knowledge-graph/themes/default-palette.md
+// ============================================================
+
+@define-color bg #1a1a26;
+@define-color bg2 #1a1a26;
+@define-color surface-dark #11111b;
+@define-color border #474540;
+@define-color fg #d5c89a;
+@define-color fg-50 rgba(213, 200, 154, 0.5);
+@define-color fg2 rgba(213, 200, 154, 0.5);
+@define-color accent #89b4fa;
+@define-color accent-50 rgba(137, 180, 250, 0.5);
+@define-color bar-bg #555555;

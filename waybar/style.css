@@ -8,13 +8,7 @@
     min-height: 0;
 }
 
-@define-color bg #16161D;
-@define-color bg2 #1A1A26;
-
-@define-color fg #d5c89a;
-@define-color fg2 #b6b09e;
-
-@define-color accent #89b4fa;
+@import url("_colors.css");
 
 window#waybar {
     background: transparent;
@@ -100,7 +94,7 @@ window#waybar {
 }
 #workspaces button.active {
     background: @accent;
-    color: #11111b;
+    color: @surface-dark;
         padding: 1px 25px;
 }
 
