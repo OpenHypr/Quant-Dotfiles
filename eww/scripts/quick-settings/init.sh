@@ -2,17 +2,7 @@
 # Inisialisasi state quick settings — dipanggil saat EWW start
 # Cek state sistem aktual dan update variabel EWW
 
-# WiFi — 3 state: off | on | <SSID>
-if nmcli radio wifi 2>/dev/null | grep -q "enabled"; then
-  ssid=$(nmcli -t -f ACTIVE,SSID dev wifi 2>/dev/null | grep "^yes:" | cut -d: -f2)
-  if [ -n "$ssid" ]; then
-    eww update qs_wifi="$ssid"
-  else
-    eww update qs_wifi="on"
-  fi
-else
-  eww update qs_wifi="off"
-fi
+# WiFi — ditangani watch-wifi.sh via deflisten, tidak perlu init di sini
 
 # Bluetooth — 3 state: off | on | <device>
 if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then

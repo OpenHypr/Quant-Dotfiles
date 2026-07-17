@@ -1,21 +1,6 @@
 #!/bin/bash
-# Pantau konektivitas WiFi & Bluetooth — dipanggil defpoll tiap 5 detik
-# Skip kalau ada toggle yg sedang transisi (lock file)
-
-# --- WiFi (skip kalau lock aktif) ---
-if [ ! -f /tmp/qs_toggle_wifi.lock ]; then
-  wifi_radio=$(nmcli radio wifi 2>/dev/null)
-  if echo "$wifi_radio" | grep -qi "enabled"; then
-    ssid=$(nmcli -t -f ACTIVE,SSID dev wifi 2>/dev/null | grep "^yes:" | cut -d: -f2)
-    if [ -n "$ssid" ]; then
-      eww update qs_wifi="$ssid"
-    else
-      eww update qs_wifi="on"
-    fi
-  else
-    eww update qs_wifi="off"
-  fi
-fi
+# Pantau Bluetooth — dipanggil defpoll tiap 5 detik
+# (WiFi ditangani watch-wifi.sh via deflisten)
 
 # --- Bluetooth ---
 # Lock check dihapus: toggle-bluetooth.sh sudah tidak ada (toggle via blueman),

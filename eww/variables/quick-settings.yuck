@@ -3,7 +3,10 @@
 ; Nilai awal dummy, init.sh update waktu EWW start
 ; ============================================================
 
-(defvar qs_wifi "on")
+; WiFi via deflisten — watcher native baca state NetworkManager,
+; emit off | on | <SSID> | animasi titik saat proses koneksi
+(deflisten qs_wifi :initial "off" "scripts/quick-settings/watch-wifi.sh")
+
 (defvar qs_bluetooth "on")
 (defvar qs_tethering "off")
 (defvar qs_airplane "off")
@@ -12,5 +15,6 @@
 (defvar qs_powermode "balanced")
 (defvar qs_theme "dark")
 
-; Polling konektivitas tiap 5 detik — update qs_wifi & qs_bluetooth
+; Polling Bluetooth tiap 5 detik — update qs_bluetooth
+; (WiFi sudah pindah ke deflisten watch-wifi.sh)
 (defpoll qs_poll :interval "5s" "scripts/quick-settings/watch-connectivity.sh")
