@@ -7,7 +7,9 @@
 ; emit off | on | <SSID> | animasi titik saat proses koneksi
 (deflisten qs_wifi :initial "off" "scripts/quick-settings/watch-wifi.sh")
 
-(defvar qs_bluetooth "on")
+; Bluetooth via deflisten — watcher native baca bluetoothctl,
+; emit off | on | <device> | animasi ● saat blueman dibuka/ditutup
+(deflisten qs_bluetooth :initial "off" "scripts/quick-settings/watch-bluetooth.sh")
 (defvar qs_tethering "off")
 (defvar qs_airplane "off")
 (defvar qs_nightlight "off")
@@ -15,6 +17,4 @@
 (defvar qs_powermode "balanced")
 (defvar qs_theme "dark")
 
-; Polling Bluetooth tiap 5 detik — update qs_bluetooth
-; (WiFi sudah pindah ke deflisten watch-wifi.sh)
-(defpoll qs_poll :interval "5s" "scripts/quick-settings/watch-connectivity.sh")
+; (defpoll konektivitas dihapus — WiFi & Bluetooth sudah deflisten masing-masing)

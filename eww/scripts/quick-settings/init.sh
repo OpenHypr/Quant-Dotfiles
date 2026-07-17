@@ -4,20 +4,7 @@
 
 # WiFi — ditangani watch-wifi.sh via deflisten, tidak perlu init di sini
 
-# Bluetooth — 3 state: off | on | <device>
-if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then
-  device=$(bluetoothctl devices Connected 2>/dev/null | head -1 | cut -d' ' -f3-)
-  if [ -z "$device" ]; then
-    device=$(bluetoothctl info 2>/dev/null | grep "Connected: yes" -B5 | grep "Name:" | head -1 | cut -d: -f2 | xargs)
-  fi
-  if [ -n "$device" ]; then
-    eww update qs_bluetooth="$device"
-  else
-    eww update qs_bluetooth="on"
-  fi
-else
-  eww update qs_bluetooth="off"
-fi
+# Bluetooth — ditangani watch-bluetooth.sh via deflisten, tidak perlu init di sini
 
 # Airplane Mode
 if nmcli networking 2>/dev/null | grep -q "enabled"; then
