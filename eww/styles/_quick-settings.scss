@@ -1,0 +1,83 @@
+// ============================================================
+// Quick Settings — control panel 2-kolom compact
+// ============================================================
+
+.qs-container {
+  padding: 10px 12px;
+}
+
+// ============================================================
+// Card — wrapper box + main button (sibling, bukan nested)
+// ============================================================
+
+.qs-card {
+  background: $surface-dark;
+  border-radius: $border-radius;
+  min-height: 56px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: #1e1e2e; // sedikit lebih terang dari $surface-dark
+  }
+}
+
+.qs-card-main {
+  background: transparent;
+  padding: 0;
+}
+
+// Icon box — compact 36×36
+.qs-icon-box {
+  background: $bg-solid;
+  border-radius: $border-radius;
+  min-width: 36px;
+  min-height: 36px;
+  margin: 10px 8px 10px 8px;
+}
+
+.qs-icon {
+  font-size: 15px;
+  font-family: $font-family;
+}
+
+// Kolom teks
+.qs-text-col {
+  margin: 10px 0 10px 0;
+}
+
+.qs-title {
+  color: $fg;
+  font-size: 10px;
+  font-family: $font-family;
+  font-weight: 300;
+}
+
+.qs-status {
+  color: #e5e5e5;
+  font-size: 9px;
+  font-family: $font-family;
+  font-weight: 300;
+}
+
+// Settings gear — sibling button, no extra chrome
+.qs-settings-btn {
+  all: unset;
+  color: $fg;
+  font-size: 14px;
+  padding: 0;
+  margin: 0 20px 0 0;
+
+  &.hidden {
+    color: transparent; // transparan: gak ketahuan pas bg card berubah saat hover
+  }
+}
+
+.qs-settings-icon {
+  all: unset;
+  color: $fg;
+  font-size: 14px;
+
+  &.hidden {
+    color: transparent;
+  }
+}

@@ -1,11 +1,26 @@
 #!/bin/bash
 # ============================================================
-# watch.sh — Pantau PipeWire sink-inputs & output JSON ke stdout
-# Dipanggil oleh EWW deflisten, setiap baris = update variabel
+# watch.sh — Pantau PipeWire default sink & sink-inputs
 # ============================================================
 
 output_state() {
-    pactl -f json list sink-inputs 2>/dev/null | jq -c '
+    local default_sink master apps
+
+    # --- Master / system volume dari default sink ---
+    default_sink=$(pactl get-default-sink 2>/dev/null)
+    master=$(pactl -f json list sinks 2>/dev/null | jq -c --arg name "$default_sink" '
+[.[] | select(.name == $name)] | first // {} | {
+    index: "master",
+    app_name: "System",
+    app_binary: "system",
+    mute: (.mute // false),
+    volume: (if .volume then (.volume | [.[].value_percent | rtrimstr("%") | tonumber] | add / length | floor) else 0 end),
+    icon: (if .mute then "󰝟" else "󰕾" end)
+}')
+    [ -z "$master" ] && master='{"index":"master","app_name":"System","app_binary":"system","mute":false,"volume":0,"icon":"󰕾"}'
+
+    # --- Per-aplikasi sink-inputs ---
+    apps=$(pactl -f json list sink-inputs 2>/dev/null | jq -c '
 [.[] | {
     index: .index,
     app_name: (.properties."application.name" // "Unknown"),
@@ -23,18 +38,15 @@ output_state() {
            elif (.properties."application.name" // "") | test("speech"; "i") then "󰂞"
            else "" end)
 }]
-'
+')
+    [ -z "$apps" ] && apps='[]'
+
+    jq -cn --argjson master "$master" --argjson apps "$apps" '{master: $master, apps: $apps}'
 }
 
-# Output initial state
 output_state
-
-# Pantau event PipeWire, re-query tiap ada perubahan sink-input
 stdbuf -oL pactl subscribe 2>/dev/null | while read -r event; do
     case "$event" in
-        *"sink-input"*)
-            sleep 0.05
-            output_state
-            ;;
+        *"sink"* | *"server"*) sleep 0.05; output_state ;;
     esac
 done

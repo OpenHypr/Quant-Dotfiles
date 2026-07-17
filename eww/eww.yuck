@@ -17,3 +17,13 @@
 (include "./variables/mixer.yuck")
 (include "./widgets/mixer/mixer_widget.yuck")
 (include "./widgets/mixer/mixer_window.yuck")
+
+; --- Mic Mixer ---
+(include "./variables/mic.yuck")
+(include "./widgets/mic/mic_widget.yuck")
+(include "./widgets/mic/mic_window.yuck")
+
+; --- Quick Settings ---
+(include "./variables/quick-settings.yuck")
+(include "./widgets/quick-settings/qs_widget.yuck")
+(include "./widgets/quick-settings/qs_window.yuck")

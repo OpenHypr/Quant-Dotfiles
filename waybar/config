@@ -95,18 +95,23 @@
             "pulseaudio"
         ],
 
-        "on-click": "sh -c 'eww active-windows | grep -q mixer: && eww close mixer || eww open mixer'"
     },
 
     "wireplumber": {
         "format": "󰍬 {volume}%",
-        "tooltip": false
+        "tooltip": false,
+        "on-click": "/home/xuanz/.config/eww/scripts/mixer/toggle-mic.sh",
+        "on-click-middle": "",
+        "on-click-right": ""
     },
 
     "pulseaudio": {
         "format": "󰕾 {volume}%",
         "format-muted": "󰝟 muted",
-        "tooltip": false
+        "tooltip": false,
+        "on-click": "/home/xuanz/.config/eww/scripts/mixer/toggle-window.sh",
+        "on-click-middle": "",
+        "on-click-right": ""
     },
 
     "network": {

@@ -11,19 +11,19 @@
 .mixer-header {
   background: $fg;
   border-radius: 5px;
-  padding: 0px 0;
-  margin-bottom: 4px;
+  padding: 10px 0;
+  margin-bottom: 20px;
 }
 
 .mixer-title {
   color: rgba(26, 26, 38, 0.9);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
 }
 
 // Setiap entry aplikasi
 .mixer-entry {
-  padding: 10px 0;
+  padding: 0px 0;
 }
 
 // Icon aplikasi

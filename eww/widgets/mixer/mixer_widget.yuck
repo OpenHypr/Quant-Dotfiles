@@ -80,8 +80,11 @@
       (box)
     )
 
+    ; System volume — selalu tampil paling atas
+    (mixer-entry :app {mixer_data.master})
+
     ; List aplikasi — kalau kosong, for loop render nothing
-    (for app in mixer_apps
+    (for app in {mixer_data.apps}
       (mixer-entry :app app)
     )
   )

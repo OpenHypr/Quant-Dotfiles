@@ -1,0 +1,5 @@
+; ============================================================
+; Variabel Mic Mixer — default source + source-outputs
+; ============================================================
+
+(deflisten mic_data :initial "{\"master\":{\"index\":0,\"app_name\":\"Microphone\",\"mute\":false,\"volume\":0,\"icon\":\"󰍬\"},\"apps\":[]}" "scripts/mixer/watch-mic.sh")

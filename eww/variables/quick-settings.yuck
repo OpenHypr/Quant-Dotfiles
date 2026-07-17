@@ -1,0 +1,16 @@
+; ============================================================
+; Variabel Quick Settings — state tiap toggle card
+; Nilai awal dummy, init.sh update waktu EWW start
+; ============================================================
+
+(defvar qs_wifi "on")
+(defvar qs_bluetooth "on")
+(defvar qs_tethering "off")
+(defvar qs_airplane "off")
+(defvar qs_nightlight "off")
+(defvar qs_dnd "off")
+(defvar qs_powermode "balanced")
+(defvar qs_theme "dark")
+
+; Polling konektivitas tiap 5 detik — update qs_wifi & qs_bluetooth
+(defpoll qs_poll :interval "5s" "scripts/quick-settings/watch-connectivity.sh")

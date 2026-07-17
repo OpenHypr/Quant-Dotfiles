@@ -1,0 +1,28 @@
+; ============================================================
+; Widget Mic Mixer — default source + aplikasi yg capture mic
+; Style sama dengan volume mixer
+; ============================================================
+
+(defwidget mic-entry [app]
+  (box :class "mixer-entry" :orientation "vertical" :spacing 4
+    (box :class "mixer-entry-header" :orientation "horizontal" :spacing 8 :halign "fill"
+      (label :class "mixer-icon" :text "${app.icon}" :width 22)
+      (label :class "mixer-name" :text "${app.app_name}" :wrap false :hexpand true :halign "start")
+      (label :class "${app.mute ? 'mixer-volume-text muted' : 'mixer-volume-text'}"
+             :text "${app.mute ? 'MUTED' : app.volume + '%'}" :width 42 :wrap false)
+      (button :class "mixer-mute-btn" :onclick "scripts/mixer/mic-toggle-mute.sh ${app.index}"
+        (label :class "${app.mute ? 'mixer-mute-icon muted' : 'mixer-mute-icon'}"
+               :text "${app.mute ? '' : ''}")))
+    (scale :class "${app.mute ? 'mixer-slider muted' : 'mixer-slider'}"
+           :min 0 :max 100 :value "${app.volume}"
+           :onchange "scripts/mixer/mic-set-volume.sh ${app.index} {}")))
+
+(defwidget mic-content []
+  (box :class "mixer-container popup" :orientation "vertical" :spacing 8 :halign "fill" :valign "center"
+    (centerbox :class "mixer-header"
+      (box)
+      (label :class "mixer-title" :text "󰍬  Mic Mixer")
+      (box))
+    (mic-entry :app {mic_data.master})
+    (for app in {mic_data.apps}
+      (mic-entry :app app))))

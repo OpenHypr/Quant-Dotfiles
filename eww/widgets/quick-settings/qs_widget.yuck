@@ -1,0 +1,124 @@
+; ============================================================
+; Widget Quick Settings — control panel 2-kolom compact
+; Ikon berubah warna sesuai state, bg icon box tetap
+; NOTE: gear button jadi sibling (bukan nested) biar gak steal click
+; ============================================================
+
+; Warna referensi
+(defvar qs_color_default "#e3e3e3")
+(defvar qs_color_fg "#d5c89a")
+(defvar qs_color_accent "#89b4fa")
+(defvar qs_color_green "#98c379")
+
+; --- Satu card toggle ---
+; ?card_onrightclick opsional — dipakai card yang butuh aksi klik kanan
+(defwidget qs-card [icon title status card_onclick settings_onclick gear_visible icon_color ?card_onrightclick]
+  ; eventbox wrapper: box biasa gak nerima event pointer, CSS :hover
+  ; cuma jalan di widget ber-event-window (button/eventbox)
+  (eventbox
+    :class "qs-card"
+    (box
+    :orientation "horizontal"
+    :spacing 0
+    ; space-evenly false: tanpa ini gear dipaksa selebar area main (50% card),
+    ; min-width card membengkak → window melebar melebihi geometry 402px
+    :space-evenly false
+
+    ; Area klik utama — icon + teks (hexpand mengisi sisa ruang)
+    (button
+      :class "qs-card-main"
+      :hexpand true
+      :onclick card_onclick
+      :onrightclick {card_onrightclick ?: ""}
+      (box
+        :orientation "horizontal"
+        :spacing 0
+        :space-evenly false
+        (box
+          :class "qs-icon-box"
+          :width 36 :height 36
+          :halign "center" :valign "center"
+          (label :class "qs-icon" :style "color: ${icon_color};" :text icon))
+        (box
+          :class "qs-text-col"
+          :orientation "vertical" :spacing 2
+          :hexpand true
+          ; truncate: biar label bisa shrink — tanpa ini natural width teks
+          ; memaksa window melebar melebihi geometry 402px
+          (label :class "qs-title" :halign "start" :truncate true :text title)
+          (label :class "qs-status" :halign "start" :truncate true :text status))
+      )
+    )
+
+    ; Settings gear — sibling button, valign center
+    (button
+      :class "${gear_visible == 'true' ? 'qs-settings-btn' : 'qs-settings-btn hidden'}"
+      :valign "center"
+      :onclick settings_onclick
+      (label :class "${gear_visible == 'true' ? 'qs-settings-icon' : 'qs-settings-icon hidden'}"
+             :text "󰒓"))
+    )
+  )
+)
+
+; --- Grid 2-kolom ---
+(defwidget qs-grid []
+  (box :class "qs-grid" :orientation "vertical" :spacing 6
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 8
+      (qs-card :icon "󰤨" :title "Wi-Fi"
+        :status "${qs_wifi == 'off' ? 'Enable' : qs_wifi == 'on' ? 'Disable' : qs_wifi}"
+        :card_onclick "scripts/quick-settings/toggle-wifi.sh"
+        :settings_onclick "nm-connection-editor &" :gear_visible "true"
+        :icon_color "${qs_wifi == 'off' ? qs_color_default : qs_wifi == 'on' ? qs_color_fg : qs_color_accent}")
+      ; Bluetooth: klik kiri/kanan toggle blueman-manager (buka/tutup),
+      ; status = indikator state: on -> Enable, off -> Disable, connected -> nama device
+      (qs-card :icon "󰂯" :title "Bluetooth"
+        :status "${qs_bluetooth == 'off' ? 'Disable' : qs_bluetooth == 'on' ? 'Enable' : qs_bluetooth}"
+        :card_onclick "scripts/quick-settings/toggle-blueman.sh"
+        :card_onrightclick "scripts/quick-settings/toggle-blueman.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_bluetooth == 'off' ? qs_color_default : qs_bluetooth == 'on' ? qs_color_fg : qs_color_accent}"))
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 8
+      (qs-card :icon "󰒇" :title "Wifi Tethering"
+        :status "${qs_tethering == 'on' ? 'On' : 'Off'}"
+        :card_onclick "scripts/quick-settings/toggle-tethering.sh"
+        :settings_onclick "" :gear_visible "true"
+        :icon_color "${qs_tethering == 'on' ? qs_color_accent : qs_color_default}")
+      (qs-card :icon "󰀝" :title "Airplane Mode"
+        :status "${qs_airplane == 'on' ? 'On' : 'Off'}"
+        :card_onclick "scripts/quick-settings/toggle-airplane.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_airplane == 'on' ? qs_color_accent : qs_color_default}"))
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 8
+      (qs-card :icon "󰒲" :title "Power Mode"
+        :status "${qs_powermode == 'safe' ? 'Safe' : qs_powermode == 'balanced' ? 'Balanced' : 'Performance'}"
+        :card_onclick "scripts/quick-settings/toggle-powermode.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_powermode == 'safe' ? qs_color_green : qs_powermode == 'balanced' ? qs_color_fg : qs_color_accent}")
+      (qs-card :icon "󰛨" :title "Night Light"
+        :status "${qs_nightlight == 'on' ? 'On' : 'Off'}"
+        :card_onclick "scripts/quick-settings/toggle-nightlight.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_nightlight == 'on' ? qs_color_accent : qs_color_default}"))
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 8
+      (qs-card :icon "󰂛" :title "DND Mode"
+        :status "${qs_dnd == 'on' ? 'Silent' : 'Normal'}"
+        :card_onclick "scripts/quick-settings/toggle-dnd.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_dnd == 'on' ? qs_color_accent : qs_color_default}")
+      (qs-card :icon "󰔎" :title "Theme"
+        :status "${qs_theme == 'dark' ? 'Dark' : 'Light'}"
+        :card_onclick "scripts/quick-settings/toggle-theme.sh"
+        :settings_onclick "scripts/quick-settings/toggle-theme.sh" :gear_visible "true"
+        :icon_color "${qs_theme == 'dark' ? qs_color_default : qs_color_fg}"))
+  )
+)
+
+; --- Konten utama ---
+(defwidget qs-content []
+  (box :class "qs-container popup" :orientation "vertical" :spacing 0 :halign "fill"
+    (qs-grid)))

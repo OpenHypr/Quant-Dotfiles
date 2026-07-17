@@ -1,5 +1,5 @@
 ; ============================================================
-; Variabel Volume Mixer — daftar aplikasi yang sedang muter audio
+; Variabel Volume Mixer — master sink + daftar aplikasi audio
 ; ============================================================
 
-(deflisten mixer_apps :initial "[]" "scripts/mixer/watch.sh")
+(deflisten mixer_data :initial "{\"master\":{\"index\":\"master\",\"app_name\":\"System\",\"mute\":false,\"volume\":0,\"icon\":\"󰕾\"},\"apps\":[]}" "scripts/mixer/watch.sh")

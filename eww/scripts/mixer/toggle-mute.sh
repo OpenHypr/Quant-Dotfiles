@@ -1,7 +1,8 @@
 #!/bin/bash
-# ============================================================
-# toggle-mute.sh <sink-input-index>
-# Toggle mute untuk sink-input tertentu
-# ============================================================
+# toggle-mute.sh <index> — "master" = default sink
 [ -z "$1" ] && exit 1
-pactl set-sink-input-mute "$1" toggle
+if [ "$1" = "master" ]; then
+    pactl set-sink-mute @DEFAULT_SINK@ toggle
+else
+    pactl set-sink-input-mute "$1" toggle
+fi
