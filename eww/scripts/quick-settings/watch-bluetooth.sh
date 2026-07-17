@@ -16,7 +16,11 @@ emit() {
 }
 
 loading() {
-  # lock valid hanya <10 detik — guard dari stale lock kalau toggle mati di tengah
+  # animasi jalan selama blueman-manager hidup — dari klik buka sampai
+  # klik tutup (atau blueman ditutup dari window-nya langsung)
+  pgrep -f 'blueman-manager$' >/dev/null && return 0
+  # lock menutup celah antara klik dan proses ter-spawn/teardown;
+  # valid hanya <10 detik — guard dari stale lock kalau toggle mati di tengah
   [ -f "$LOCK" ] || return 1
   age=$(( $(date +%s) - $(stat -c %Y "$LOCK" 2>/dev/null || echo 0) ))
   [ "$age" -lt 10 ]
