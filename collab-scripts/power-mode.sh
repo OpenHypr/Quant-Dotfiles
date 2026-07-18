@@ -96,7 +96,7 @@ cmd_cycle() {
   esac
 
   # update EWW langsung (instant, tanpa nunggu watcher)
-  eww update qs_powermode="$next" 2>/dev/null
+  /usr/bin/eww update qs_powermode="$next" 2>/dev/null
 
   # signal waybar
   signal_waybar

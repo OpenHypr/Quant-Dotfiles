@@ -15,6 +15,14 @@ emit() {
 }
 
 while true; do
+  # Airplane mode: networking off → WiFi force off
+  if ! nmcli networking 2>/dev/null | grep -qi "enabled"; then
+    emit "off"
+    dots=0
+    sleep 1
+    continue
+  fi
+
   if ! nmcli radio wifi 2>/dev/null | grep -qi "enabled"; then
     emit "off"
     dots=0

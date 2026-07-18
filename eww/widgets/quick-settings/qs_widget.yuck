@@ -49,11 +49,13 @@
       )
 
       ; overlay layer — gear float di kanan atas
+      ; sensitive=false saat hidden biar gak intercept click main button
       (button
         :class "${gear_visible == 'true' ? 'qs-settings-btn' : 'qs-settings-btn hidden'}"
         :halign "end"
         :valign "center"
-        :onclick settings_onclick
+        :visible "${gear_visible == 'true' ? '1' : '0'}"
+        :onclick "${settings_onclick == '' ? card_onclick : settings_onclick}"
         (label :class "${gear_visible == 'true' ? 'qs-settings-icon' : 'qs-settings-icon hidden'}"
                :text "󰒓"))
     )
@@ -65,19 +67,22 @@
   (box :class "qs-grid" :orientation "vertical" :spacing 6
 
     (box :class "qs-row" :orientation "horizontal" :spacing 2
-      (qs-card :icon "${qs_wifi == 'off' ? '󰖪' : qs_wifi == 'on' ? '󰖩' : qs_wifi == '●' ? '󱛇' : qs_wifi == '●●●' ? '󱛇' : qs_wifi == '●●●●●●' ? '󱛇' : '󱚻'}" :title "Wi-Fi"
+
+      (qs-card :icon "${qs_wifi == 'off' ? '󰖪' : qs_wifi == 'on' ? '󰖩' : qs_wifi == '●' ? '󱛇' : qs_wifi == '● ●' ? '󱛇' : qs_wifi == '● ● ●' ? '󱛇' : '󱚻'}" :title "Wi-Fi"
         :status "${qs_wifi == 'off' ? 'Off' : qs_wifi == 'on' ? 'On' : qs_wifi}"
         :card_onclick "scripts/quick-settings/toggle-wifi.sh"
         :settings_onclick "nm-connection-editor &" :gear_visible "true"
         :icon_color "${qs_wifi == 'off' ? qs_color_default : qs_wifi == 'on' ? qs_color_fg : qs_color_accent}")
+
       ; Wifi Tethering (pindah ke row 1)
-      (qs-card :icon "󰤪" :title "Wifi Tethering"
-        :status "${qs_tethering == 'on' ? 'On' : 'Off'}"
+      (qs-card :icon "${qs_tethering == '●' ? '󰓦' : qs_tethering == '● ●' ? '󰓦' : qs_tethering == '● ● ●' ? '󰓦' : qs_tethering == 'on' ? '󰀃' : '󱔑'}" :title "Wifi Tethering"
+        :status "${qs_tethering == '●' ? '●' : qs_tethering == '● ●' ? '● ●' : qs_tethering == '● ● ●' ? '● ● ●' : qs_tethering == 'on' ? 'On' : 'Off'}"
         :card_onclick "scripts/quick-settings/toggle-tethering.sh"
         :settings_onclick "" :gear_visible "true"
         :icon_color "${qs_tethering == 'on' ? qs_color_accent : qs_color_default}"))
 
     (box :class "qs-row" :orientation "horizontal" :spacing 2
+
       ; Bluetooth: pindah ke row 2 kiri
       (qs-card :icon "󰂯" :title "Bluetooth"
         :status "${qs_bluetooth == 'off' ? 'Off' : qs_bluetooth == 'on' ? 'On' : qs_bluetooth}"
@@ -85,18 +90,21 @@
         :card_onrightclick "scripts/quick-settings/toggle-blueman.sh"
         :settings_onclick "" :gear_visible "false"
         :icon_color "${qs_bluetooth == 'off' ? qs_color_default : qs_bluetooth == 'on' ? qs_color_fg : qs_color_accent}")
-      (qs-card :icon "󰀝" :title "Airplane Mode"
+
+      (qs-card :icon "${qs_airplane == 'on' ? '󰀝' : '󰀞'}" :title "Airplane Mode"
         :status "${qs_airplane == 'on' ? 'On' : 'Off'}"
         :card_onclick "scripts/quick-settings/toggle-airplane.sh"
         :settings_onclick "" :gear_visible "false"
         :icon_color "${qs_airplane == 'on' ? qs_color_accent : qs_color_default}"))
 
     (box :class "qs-row" :orientation "horizontal" :spacing 2
-      (qs-card :icon "󰒲" :title "Power Mode"
+
+      (qs-card :icon "${qs_powermode == 'safe' ? '' : qs_powermode == 'balanced' ? '' : ''}" :title "Power Mode"
         :status "${qs_powermode == 'safe' ? 'Safe' : qs_powermode == 'balanced' ? 'Balanced' : 'Performance'}"
         :card_onclick "/home/xuanz/.config/collab-scripts/power-mode.sh cycle"
         :settings_onclick "" :gear_visible "false"
         :icon_color "${qs_powermode == 'safe' ? qs_color_green : qs_powermode == 'balanced' ? qs_color_fg : qs_color_accent}")
+
       (qs-card :icon "󰛨" :title "Night Light"
         :status "${qs_nightlight == 'on' ? 'On' : 'Off'}"
         :card_onclick "scripts/quick-settings/toggle-nightlight.sh"
@@ -104,11 +112,13 @@
         :icon_color "${qs_nightlight == 'on' ? qs_color_accent : qs_color_default}"))
 
     (box :class "qs-row" :orientation "horizontal" :spacing 2
+
       (qs-card :icon "󰂛" :title "DND Mode"
         :status "${qs_dnd == 'on' ? 'Silent' : 'Normal'}"
         :card_onclick "scripts/quick-settings/toggle-dnd.sh"
         :settings_onclick "" :gear_visible "false"
         :icon_color "${qs_dnd == 'on' ? qs_color_accent : qs_color_default}")
+
       (qs-card :icon "󰔎" :title "Theme"
         :status "${qs_theme == 'dark' ? 'Dark' : 'Light'}"
         :card_onclick "scripts/quick-settings/toggle-theme.sh"
