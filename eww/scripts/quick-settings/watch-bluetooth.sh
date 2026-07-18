@@ -1,7 +1,7 @@
 #!/bin/bash
 # Watcher Bluetooth native untuk deflisten qs_bluetooth
-# Output: off | on | <device> | animasi ● saat blueman dibuka/ditutup
-# Lock dari toggle-blueman.sh = tampilkan animasi loading selama transisi
+# Output: off | on | <device> | animasi ● saat transisi power
+# Lock dari toggle-bluetooth.sh = tampilkan animasi loading selama transisi
 LOCK="/tmp/qs_bt_loading.lock"
 
 last=""
@@ -16,11 +16,9 @@ emit() {
 }
 
 loading() {
-  # animasi jalan selama blueman-manager hidup — dari klik buka sampai
-  # klik tutup (atau blueman ditutup dari window-nya langsung)
-  pgrep -f 'blueman-manager$' >/dev/null && return 0
-  # lock menutup celah antara klik dan proses ter-spawn/teardown;
-  # valid hanya <10 detik — guard dari stale lock kalau toggle mati di tengah
+  # animasi cuma untuk transisi power — lock dari toggle-bluetooth.sh;
+  # buka/tutup blueman tidak menyentuh lock, jadi status BT tetap tampil.
+  # lock valid hanya <10 detik — guard dari stale lock kalau toggle mati di tengah
   [ -f "$LOCK" ] || return 1
   age=$(( $(date +%s) - $(stat -c %Y "$LOCK" 2>/dev/null || echo 0) ))
   [ "$age" -lt 10 ]
@@ -32,8 +30,8 @@ while true; do
     dots=$(( dots % 3 + 1 ))
     case $dots in
       1) emit "●" ;;
-      2) emit "●●●" ;;
-      3) emit "●●●●●●" ;;
+      2) emit "● ●" ;;
+      3) emit "● ● ●" ;;
     esac
     sleep 0.4
     continue

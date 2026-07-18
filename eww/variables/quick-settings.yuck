@@ -10,7 +10,10 @@
 ; Bluetooth via deflisten — watcher native baca bluetoothctl,
 ; emit off | on | <device> | animasi ● saat blueman dibuka/ditutup
 (deflisten qs_bluetooth :initial "off" "scripts/quick-settings/watch-bluetooth.sh")
-(defvar qs_tethering "off")
+
+; Tethering via deflisten — watcher baca koneksi aktif "Hotspot" di NetworkManager,
+; emit off | on | animasi ● saat transisi (sinkron juga kalau diubah dari luar)
+(deflisten qs_tethering :initial "off" "scripts/quick-settings/watch-tethering.sh")
 (defvar qs_airplane "off")
 (defvar qs_nightlight "off")
 (defvar qs_dnd "off")

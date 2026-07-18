@@ -13,12 +13,7 @@ else
   eww update qs_airplane="on"
 fi
 
-# Tethering
-if nmcli connection show --active 2>/dev/null | grep -q "Hotspot"; then
-  eww update qs_tethering="on"
-else
-  eww update qs_tethering="off"
-fi
+# Tethering — ditangani watch-tethering.sh via deflisten, tidak perlu init di sini
 
 # Night Light
 if pgrep -x "hyprsunset\|wlsunset\|gammastep" >/dev/null 2>&1; then
