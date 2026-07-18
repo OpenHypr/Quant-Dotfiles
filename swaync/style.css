@@ -152,7 +152,7 @@
   background: transparent;
 }
 
-/* ---------- Close button ---------- */
+/* ---------- Close button ----------- */
 
 .close-button {
   background: alpha(@fg2, 0.10);
