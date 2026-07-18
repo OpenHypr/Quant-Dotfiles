@@ -67,14 +67,14 @@
 
     (box :class "qs-row" :orientation "horizontal" :spacing 8
       (qs-card :icon "󰤨" :title "Wi-Fi"
-        :status "${qs_wifi == 'off' ? 'Enable' : qs_wifi == 'on' ? 'Disable' : qs_wifi}"
+        :status "${qs_wifi == 'off' ? 'Off' : qs_wifi == 'on' ? 'On' : qs_wifi}"
         :card_onclick "scripts/quick-settings/toggle-wifi.sh"
         :settings_onclick "nm-connection-editor &" :gear_visible "true"
         :icon_color "${qs_wifi == 'off' ? qs_color_default : qs_wifi == 'on' ? qs_color_fg : qs_color_accent}")
       ; Bluetooth: klik kiri/kanan toggle blueman-manager (buka/tutup),
       ; status = indikator state: on -> Enable, off -> Disable, connected -> nama device
       (qs-card :icon "󰂯" :title "Bluetooth"
-        :status "${qs_bluetooth == 'off' ? 'Disable' : qs_bluetooth == 'on' ? 'Enable' : qs_bluetooth}"
+        :status "${qs_bluetooth == 'off' ? 'Off' : qs_bluetooth == 'on' ? 'On' : qs_bluetooth}"
         :card_onclick "scripts/quick-settings/toggle-blueman.sh"
         :card_onrightclick "scripts/quick-settings/toggle-blueman.sh"
         :settings_onclick "" :gear_visible "false"

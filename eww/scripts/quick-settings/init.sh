@@ -44,15 +44,7 @@ else
   eww update qs_dnd="off"
 fi
 
-# Power Mode
-if command -v powerprofilesctl &>/dev/null; then
-  profile=$(powerprofilesctl get 2>/dev/null)
-  case "$profile" in
-    *power-saver*)  eww update qs_powermode="safe" ;;
-    *performance*)  eww update qs_powermode="performance" ;;
-    *)              eww update qs_powermode="balanced" ;;
-  esac
-fi
+# Power Mode — ditangani watch-powermode.sh via deflisten, tidak perlu init di sini
 
 # Theme
 eww update qs_theme="dark"

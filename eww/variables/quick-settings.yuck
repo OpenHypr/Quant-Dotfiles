@@ -14,7 +14,9 @@
 (defvar qs_airplane "off")
 (defvar qs_nightlight "off")
 (defvar qs_dnd "off")
-(defvar qs_powermode "balanced")
+; Power Mode via deflisten — event-driven DBus, sinkron dengan waybar
+; emit safe | balanced | performance
+(deflisten qs_powermode :initial "balanced" "scripts/quick-settings/watch-powermode.sh")
 (defvar qs_theme "dark")
 
 ; (defpoll konektivitas dihapus — WiFi & Bluetooth sudah deflisten masing-masing)
