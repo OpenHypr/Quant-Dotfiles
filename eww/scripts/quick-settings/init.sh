@@ -15,9 +15,9 @@ fi
 
 # Tethering — ditangani watch-tethering.sh via deflisten, tidak perlu init di sini
 
-# Night Light
-if pgrep -x "hyprsunset\|wlsunset\|gammastep" >/dev/null 2>&1; then
-  eww update qs_nightlight="on"
+# Night Light — level cycle (off|25%|50%|75%|100%) tersimpan di state file
+if pgrep -x "hyprsunset" >/dev/null 2>&1; then
+  eww update qs_nightlight="$(cat /tmp/qs_nightlight.state 2>/dev/null || echo '50%')"
 else
   eww update qs_nightlight="off"
 fi

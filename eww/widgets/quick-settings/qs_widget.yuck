@@ -107,11 +107,12 @@
         :settings_onclick "" :gear_visible "false"
         :icon_color "${qs_powermode == 'safe' ? qs_color_green : qs_powermode == 'balanced' ? qs_color_fg : qs_color_accent}")
 
+      ; Night Light: cycle off → 25% → 50% → 75% → 100% → off
       (qs-card :icon "󰛨" :title "Night Light"
-        :status "${qs_nightlight == 'on' ? 'On' : 'Off'}"
+        :status "${qs_nightlight == 'off' ? 'Off' : qs_nightlight}"
         :card_onclick "scripts/quick-settings/toggle-nightlight.sh"
         :settings_onclick "" :gear_visible "false"
-        :icon_color "${qs_nightlight == 'on' ? qs_color_accent : qs_color_default}"))
+        :icon_color "${qs_nightlight == 'off' ? qs_color_default : qs_color_accent}"))
 
     (box :class "qs-row" :orientation "horizontal" :spacing 2
 
