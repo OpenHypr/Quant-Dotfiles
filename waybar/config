@@ -164,7 +164,7 @@
 
         "modules": [
             "battery",
-            "power-profiles-daemon"
+            "custom/power-mode"
         ]
     },
 
@@ -175,15 +175,12 @@
         "tooltip": false
     },
 
-    "power-profiles-daemon": {
-        "format": "{icon}",
-
-    "format-icons": {
-        "performance": "",
-        "balanced": "",
-        "power-saver": ""
-    },
-
-        "tooltip": false
+    "custom/power-mode": {
+        "exec": "~/.config/collab-scripts/power-mode.sh icon",
+        "format": "{}",
+        "tooltip": false,
+        "interval": "once",
+        "signal": 5,
+        "on-click": "~/.config/collab-scripts/power-mode.sh cycle"
     }
 }

@@ -3,7 +3,7 @@
 // ============================================================
 
 .qs-container {
-  padding: 10px 12px;
+  padding: 10px 10px 10px 10px;
 }
 
 // ============================================================
@@ -11,19 +11,20 @@
 // ============================================================
 
 .qs-card {
+  margin: 0px 2px;  // Container box — no background/hover, styling ada di button di dalamnya
+}
+
+.qs-card-main {
   background: $surface-dark;
   border-radius: $border-radius;
   min-height: 56px;
+  min-width: 185px;
+  padding: 0;
   transition: background 150ms ease;
 
   &:hover {
     background: #1e1e2e; // sedikit lebih terang dari $surface-dark
   }
-}
-
-.qs-card-main {
-  background: transparent;
-  padding: 0;
 }
 
 // Icon box — compact 36×36
@@ -59,25 +60,45 @@
   font-weight: 300;
 }
 
-// Settings gear — sibling button, no extra chrome
+// Settings gear — overlay di kanan card, gak makan space konten
 .qs-settings-btn {
   all: unset;
+  background: $bg-solid;
   color: $fg;
-  font-size: 14px;
-  padding: 0;
-  margin: 0 20px 0 0;
+  font-size: 12px;
+  padding: 0 10px 0 8px;
+  margin: 0 10px 0 0;
+  min-height: 28px;
+  border-radius: 5px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: $accent;
+    color: $bg-solid;
+
+    .qs-settings-icon {
+      color: $bg-solid;
+    }
+  }
 
   &.hidden {
-    color: transparent; // transparan: gak ketahuan pas bg card berubah saat hover
+    background: transparent;
+    color: transparent;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    min-height: 0;
+    border-radius: 0;
   }
 }
 
 .qs-settings-icon {
   all: unset;
   color: $fg;
-  font-size: 14px;
+  font-size: 12px;
 
   &.hidden {
+    font-size: 0;
     color: transparent;
   }
 }

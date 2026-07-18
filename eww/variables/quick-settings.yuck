@@ -16,7 +16,7 @@
 (defvar qs_dnd "off")
 ; Power Mode via deflisten — event-driven DBus, sinkron dengan waybar
 ; emit safe | balanced | performance
-(deflisten qs_powermode :initial "balanced" "scripts/quick-settings/watch-powermode.sh")
+(deflisten qs_powermode :initial "balanced" "/home/xuanz/.config/collab-scripts/power-mode.sh watch")
 (defvar qs_theme "dark")
 
 ; (defpoll konektivitas dihapus — WiFi & Bluetooth sudah deflisten masing-masing)

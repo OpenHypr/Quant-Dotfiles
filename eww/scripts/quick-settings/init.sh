@@ -44,7 +44,7 @@ else
   eww update qs_dnd="off"
 fi
 
-# Power Mode — ditangani watch-powermode.sh via deflisten, tidak perlu init di sini
+# Power Mode — ditangani collab-scripts/power-mode.sh, tidak perlu init di sini
 
 # Theme
 eww update qs_theme="dark"

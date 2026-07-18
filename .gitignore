@@ -35,6 +35,9 @@
 !swaync/
 !swaync/**
 
+!collab-scripts/
+!collab-scripts/**
+
 !.gitignore
 !README.md
 
@@ -42,31 +45,3 @@
 eww/CLAUDE.md
 
 # Obsidian workspace — auto-generated
-
-wifi 
-disable= default
-active= fg
-connected= accent
-bluetooth
-disable= default
-active= fg
-connected= accent
-hospot tetring
-off=default
-on= accent
-airplane mode
-off=default
-on= accent
-pomermode
-hemat daya= green
-balenced= fg
-performance= accent
-night light
-off=default
-on= accent
-dnd mode
-off=default
-on= accent
-theme
-dark= default
-light= fg

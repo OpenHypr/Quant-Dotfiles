@@ -23,7 +23,7 @@ window#waybar {
 #tray,
 #network,
 #battery,
-#power-profiles-daemon {
+#custom-power-mode {
     background: alpha(@bg, 0.92);
 
     color: @fg;
@@ -40,7 +40,7 @@ window#waybar {
 #tray:hover,
 #network:hover,
 #battery:hover,
-#power-profiles-daemon:hover {
+#custom-power-mode:hover {
     background: alpha(@bg2, 0.96);
 }
 
@@ -256,7 +256,7 @@ window#waybar {
     color: @fg;
 }
 
-#power-profiles-daemon {
+#custom-power-mode {
     color: @fg;
 }
 
