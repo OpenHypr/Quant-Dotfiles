@@ -1,20 +1,25 @@
 #!/bin/bash
 # Cycle Power Mode: safe → balanced → performance → safe
-# Update EWW langsung biar UI responsif tanpa nunggu watcher (deflisten)
-# Watcher tetap jalan buat sinkronisasi perubahan dari luar (waybar, CLI)
+# Frontend: update variabel EWW (instant)
+# Backend:  jalankan power-mode.sh <mode> (sync system + waybar)
+COLLAB="$HOME/.config/collab-scripts/power-mode.sh"
+current=$(eww get qs_powermode 2>/dev/null || echo "balanced")
 
-current=$(powerprofilesctl get 2>/dev/null || echo "balanced")
 case "$current" in
-  power-saver)
-    powerprofilesctl set balanced 2>/dev/null
-    eww update qs_powermode="balanced" 2>/dev/null
+  safe)
+    eww update qs_powermode="balanced"
+    "$COLLAB" balanced &
     ;;
   balanced)
-    powerprofilesctl set performance 2>/dev/null
-    eww update qs_powermode="performance" 2>/dev/null
+    eww update qs_powermode="performance"
+    "$COLLAB" performance &
+    ;;
+  performance)
+    eww update qs_powermode="safe"
+    "$COLLAB" safe &
     ;;
   *)
-    powerprofilesctl set power-saver 2>/dev/null
-    eww update qs_powermode="safe" 2>/dev/null
+    eww update qs_powermode="balanced"
+    "$COLLAB" balanced &
     ;;
 esac

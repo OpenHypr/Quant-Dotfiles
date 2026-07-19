@@ -1,13 +1,14 @@
 #!/bin/bash
 # ============================================================
-# Backend Power Mode — single source of truth untuk EWW & Waybar
-# Hanya script ini yg akses DBus power-profiles-daemon
+# Backend Power Mode — akses DBus power-profiles-daemon + signal waybar
+# Tidak menyentuh EWW qs_powermode (card power mode sekarang frontend-only)
 #
 # Subcommand:
-#   watch  — deflisten daemon: monitor DBus → emit safe|balanced|performance
-#   cycle  — cycle profile + update EWW + signal waybar
-#   get    — output current state: safe|balanced|performance
-#   icon   — output Nerd Font icon sesuai current state
+#   watch       — daemon: monitor DBus → signal waybar
+#   cycle       — cycle profile + signal waybar
+#   safe|balanced|performance — set profile langsung + signal waybar
+#   get         — output current state: safe|balanced|performance
+#   icon        — output Nerd Font icon sesuai current state
 # ============================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -45,7 +46,9 @@ signal_waybar() {
 
 # ============================================================
 # Subcommand: watch
-# deflisten daemon — emit state ke stdout + signal waybar
+# Daemon background — monitor DBus + signal waybar
+# Dipanggil init.sh pas eww start, jalan persistent
+# NOTE: tidak update EWW qs_powermode (card sekarang frontend-only)
 # ============================================================
 cmd_watch() {
   local last=""
@@ -54,9 +57,7 @@ cmd_watch() {
     local state
     state=$(get_state)
     if [ "$state" != "$last" ]; then
-      echo "$state"
       last="$state"
-      # signal waybar setiap kali state berubah
       signal_waybar
     fi
   }
@@ -73,8 +74,29 @@ cmd_watch() {
 }
 
 # ============================================================
+# Subcommand: safe | balanced | performance
+# Set profile langsung + signal waybar
+# NOTE: tidak update EWW (frontend-only)
+# ============================================================
+cmd_safe() {
+  powerprofilesctl set power-saver 2>/dev/null
+  signal_waybar
+}
+
+cmd_balanced() {
+  powerprofilesctl set balanced 2>/dev/null
+  signal_waybar
+}
+
+cmd_performance() {
+  powerprofilesctl set performance 2>/dev/null
+  signal_waybar
+}
+
+# ============================================================
 # Subcommand: cycle
-# Cycle profile + update EWW langsung + signal waybar
+# Cycle profile + signal waybar
+# NOTE: tidak update EWW (frontend-only)
 # ============================================================
 cmd_cycle() {
   local current next
@@ -94,9 +116,6 @@ cmd_cycle() {
       next="safe"
       ;;
   esac
-
-  # update EWW langsung (instant, tanpa nunggu watcher)
-  /usr/bin/eww update qs_powermode="$next" 2>/dev/null
 
   # signal waybar
   signal_waybar
@@ -122,12 +141,15 @@ cmd_icon() {
 # Dispatch
 # ============================================================
 case "${1:-}" in
-  watch)  cmd_watch ;;
-  cycle)  cmd_cycle ;;
-  get)    cmd_get ;;
-  icon)   cmd_icon ;;
+  watch)       cmd_watch ;;
+  cycle)       cmd_cycle ;;
+  safe)        cmd_safe ;;
+  balanced)    cmd_balanced ;;
+  performance) cmd_performance ;;
+  get)         cmd_get ;;
+  icon)        cmd_icon ;;
   *)
-    echo "Usage: $0 {watch|cycle|get|icon}" >&2
+    echo "Usage: $0 {watch|cycle|safe|balanced|performance|get|icon}" >&2
     exit 1
     ;;
 esac

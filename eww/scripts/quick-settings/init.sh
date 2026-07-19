@@ -39,7 +39,9 @@ else
   eww update qs_dnd="off"
 fi
 
-# Power Mode — ditangani collab-scripts/power-mode.sh, tidak perlu init di sini
+# Power Mode — watcher daemon + init value
+/home/xuanz/.config/collab-scripts/power-mode.sh watch &
+eww update qs_powermode="$(/home/xuanz/.config/collab-scripts/power-mode.sh get)" 2>/dev/null
 
 # Theme
 eww update qs_theme="dark"

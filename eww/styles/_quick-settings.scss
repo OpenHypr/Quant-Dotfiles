@@ -61,6 +61,7 @@
 }
 
 // Settings gear — overlay di kanan card, gak makan space konten
+// hidden = tidak dirender (via :visible), gak butuh class hidden
 .qs-settings-btn {
   all: unset;
   background: $bg-solid;
@@ -80,25 +81,10 @@
       color: $bg-solid;
     }
   }
-
-  &.hidden {
-    background: transparent;
-    color: transparent;
-    padding: 0;
-    margin: 0;
-    min-width: 0;
-    min-height: 0;
-    border-radius: 0;
-  }
 }
 
 .qs-settings-icon {
   all: unset;
   color: $fg;
   font-size: 12px;
-
-  &.hidden {
-    font-size: 0;
-    color: transparent;
-  }
 }

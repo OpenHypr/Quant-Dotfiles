@@ -14,6 +14,26 @@
 ; ?card_onrightclick opsional — dipakai card yang butuh aksi klik kanan
 ; NOTE: tanpa eventbox wrapper — hover & background di button langsung
 ;        eventbox di GTK3 kadang delay nerima event pas window baru dibuka
+; Konten dalam card (dipakai qs-card) — biar gak duplikasi
+(defwidget qs-card-inner [icon icon_color title status]
+  (box
+    :orientation "horizontal"
+    :spacing 0
+    :space-evenly false
+    (box
+      :class "qs-icon-box"
+      :width 36 :height 36
+      :halign "center" :valign "center"
+      (label :class "qs-icon" :style "color: ${icon_color};" :text icon))
+    (box
+      :class "qs-text-col"
+      :orientation "vertical" :spacing 2
+      :hexpand true
+      (label :class "qs-title" :halign "start" :truncate true :text title)
+      (label :class "qs-status" :halign "start" :truncate true :text status))
+  )
+)
+
 (defwidget qs-card [icon title status card_onclick settings_onclick gear_visible icon_color ?card_onrightclick]
   (box
     :class "qs-card"
@@ -22,43 +42,33 @@
     :spacing 0
     :space-evenly false
 
-    ; overlay: gear nempel di kanan tanpa makan space konten utama
+    ; CABANG A: Dengan gear (overlay) — gear_visible == true
     (overlay
-      ; base layer — main button: icon + teks
+      :visible "${gear_visible == 'true'}"
       (button
         :class "qs-card-main"
         :hexpand true
         :onclick card_onclick
         :onrightclick {card_onrightclick ?: ""}
-        (box
-          :orientation "horizontal"
-          :spacing 0
-          :space-evenly false
-          (box
-            :class "qs-icon-box"
-            :width 36 :height 36
-            :halign "center" :valign "center"
-            (label :class "qs-icon" :style "color: ${icon_color};" :text icon))
-          (box
-            :class "qs-text-col"
-            :orientation "vertical" :spacing 2
-            :hexpand true
-            (label :class "qs-title" :halign "start" :truncate true :text title)
-            (label :class "qs-status" :halign "start" :truncate true :text status))
-        )
-      )
-
-      ; overlay layer — gear float di kanan atas
-      ; sensitive=false saat hidden biar gak intercept click main button
+        (qs-card-inner :icon icon :icon_color icon_color :title title :status status))
       (button
-        :class "${gear_visible == 'true' ? 'qs-settings-btn' : 'qs-settings-btn hidden'}"
+        :class "qs-settings-btn"
         :halign "end"
         :valign "center"
-        :visible "${gear_visible == 'true' ? '1' : '0'}"
-        :onclick "${settings_onclick == '' ? card_onclick : settings_onclick}"
-        (label :class "${gear_visible == 'true' ? 'qs-settings-icon' : 'qs-settings-icon hidden'}"
-               :text "󰒓"))
+        :onclick settings_onclick
+        (label :class "qs-settings-icon" :text "󰒓"))
     )
+
+    ; CABANG B: Tanpa gear (plain button) — gear_visible != true
+    ; Hindari overlay dgn 1 child — EWW 0.5.0 bug: event handler
+    ; gak reconnect setelah re-render di single-child overlay
+    (button
+      :visible "${gear_visible != 'true'}"
+      :class "qs-card-main"
+      :hexpand true
+      :onclick card_onclick
+      :onrightclick {card_onrightclick ?: ""}
+      (qs-card-inner :icon icon :icon_color icon_color :title title :status status))
   )
 )
 
@@ -103,7 +113,7 @@
 
       (qs-card :icon "${qs_powermode == 'safe' ? '' : qs_powermode == 'balanced' ? '' : ''}" :title "Power Mode"
         :status "${qs_powermode == 'safe' ? 'Safe' : qs_powermode == 'balanced' ? 'Balanced' : 'Performance'}"
-        :card_onclick "/home/xuanz/.config/collab-scripts/power-mode.sh cycle"
+        :card_onclick "scripts/quick-settings/toggle-powermode.sh"
         :settings_onclick "" :gear_visible "false"
         :icon_color "${qs_powermode == 'safe' ? qs_color_green : qs_powermode == 'balanced' ? qs_color_fg : qs_color_accent}")
 
