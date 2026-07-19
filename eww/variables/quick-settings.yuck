@@ -22,4 +22,5 @@
 (defvar qs_powermode "balanced")
 (defvar qs_theme "dark")
 
-; (defpoll konektivitas dihapus — WiFi & Bluetooth sudah deflisten masing-masing)
+; Power Bar — hostname untuk identitas panel di atas QS
+(deflisten power_hostname :initial "xuanz@archlinux" "scripts/power-menu/watch-hostname.sh")

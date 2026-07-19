@@ -1,0 +1,5 @@
+; ============================================================
+; Variabel Power Menu — hostname buat identitas panel
+; ============================================================
+
+(deflisten power_hostname :initial "xuanz@archlinux" "scripts/power-menu/watch-hostname.sh")

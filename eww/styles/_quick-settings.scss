@@ -3,7 +3,7 @@
 // ============================================================
 
 .qs-container {
-  padding: 10px 10px 10px 10px;
+  padding: 4px 10px 10px 10px;
 }
 
 // ============================================================
@@ -88,3 +88,66 @@
   color: $fg;
   font-size: 12px;
 }
+
+// ============================================================
+// Header Bar — top row: logo + hostname + 4 action button
+// ============================================================
+
+.header-bar {
+  padding: 0 0px 10px 0px;
+  border-bottom: 1px solid $border;
+  min-height: 0px;
+}
+
+.header-logo {
+  background: $surface-dark;
+  border-radius: $border-radius;
+  padding: 5px 15px;
+  margin-left: 2px;
+
+  label {
+    color: #1793D1;
+    font-size: 15px;
+    font-family: $font-family;
+    margin-right: 2px;
+  }
+}
+
+.header-hostname {
+  background: $surface-dark;
+  border-radius: $border-radius;
+  padding: 5px 20px;
+
+  label {
+    color: $fg;
+    font-size: 11px;
+    font-family: $font-family;
+    font-weight: 400;
+  }
+}
+
+.header-btn {
+  all: unset;
+  background: $surface-dark;
+  border-radius: $border-radius;
+  padding: 5px 13px;
+  transition: background 150ms ease;
+  margin-right: 2px;
+
+  &:hover {
+    background: $accent;
+
+    .header-btn-icon {
+      color: $bg-solid;
+    }
+  }
+}
+
+.header-btn-icon {
+  color: $fg;
+  font-size: 12px;
+  font-family: $font-family;
+  transition: color 150ms ease;
+  margin-right: 1px;
+}
+

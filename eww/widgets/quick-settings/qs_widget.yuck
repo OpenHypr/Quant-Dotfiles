@@ -76,6 +76,8 @@
 (defwidget qs-grid []
   (box :class "qs-grid" :orientation "vertical" :spacing 6
 
+    (header-bar)
+
     (box :class "qs-row" :orientation "horizontal" :spacing 2
 
       (qs-card :icon "${qs_wifi == 'off' ? '󰖪' : qs_wifi == 'on' ? '󰖩' : qs_wifi == '●' ? '󱛇' : qs_wifi == '● ●' ? '󱛇' : qs_wifi == '● ● ●' ? '󱛇' : '󱚻'}" :title "Wi-Fi"
@@ -137,6 +139,66 @@
         :card_onclick "scripts/quick-settings/toggle-theme.sh"
         :settings_onclick "scripts/quick-settings/toggle-theme.sh" :gear_visible "true"
         :icon_color "${qs_theme == 'dark' ? qs_color_default : qs_color_fg}"))
+  )
+)
+
+; --- Power Bar — identitas + 4 tombol power action (top row QS) ---
+(defwidget header-bar []
+  (box
+    :class "header-bar"
+    :orientation "horizontal"
+    :spacing 5
+    :space-evenly false
+    :valign "center"
+
+    ; --- Kiri: Logo + Hostname ---
+    (box
+      :orientation "horizontal"
+      :spacing 5
+      :space-evenly false
+      (box
+        :class "header-logo"
+        :halign "center" :valign "center"
+        (label :style "color: #1793D1;" :text "󰣇"))
+      (box
+        :class "header-hostname"
+        :halign "center" :valign "center"
+        (label :truncate false :text power_hostname)))
+
+    ; --- Spacer — dorong kanan ke pinggir ---
+    (box :hexpand true)
+
+    ; --- Kanan: 4 tombol power ---
+    (box
+      :orientation "horizontal"
+      :spacing 5
+      :space-evenly false
+      :halign "end"
+      (button
+        :class "header-btn"
+        :tooltip "Sleep"
+        :onclick "scripts/power-menu/actions.sh sleep"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰒲"))
+      (button
+        :class "header-btn"
+        :tooltip "Logout"
+        :onclick "scripts/power-menu/actions.sh logout"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰍃"))
+      (button
+        :class "header-btn"
+        :tooltip "Reboot"
+        :onclick "scripts/power-menu/actions.sh reboot"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰜉"))
+      (button
+        :class "header-btn"
+        :tooltip "Power Off"
+        :onclick "scripts/power-menu/actions.sh poweroff"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰐥"))
+    )
   )
 )
 

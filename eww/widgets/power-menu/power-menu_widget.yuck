@@ -1,0 +1,83 @@
+; ============================================================
+; Widget Power Menu — bar horizontal ala Figma "Control Panel"
+; Adaptasi dari desain 620px → 402px (lebar window lain)
+; Kiri: logo Arch + hostname, Kanan: 4 tombol power action
+; ============================================================
+
+; --- Tombol power action individual ---
+(defwidget power-btn [icon tooltip action]
+  (button
+    :class "power-btn"
+    :tooltip tooltip
+    :onclick action
+    (label :class "power-btn-icon" :text icon))
+)
+
+; --- Konten utama power menu ---
+(defwidget power-menu-content []
+  (box
+    :class "power-menu-container popup"
+    :orientation "horizontal"
+    :spacing 0
+    :space-evenly false
+    :halign "fill"
+
+    ; --- Kiri: Logo Arch + Hostname ---
+    (box
+      :class "power-host-group"
+      :orientation "horizontal"
+      :spacing 6
+      :space-evenly false
+      :hexpand true
+
+      ; Logo Arch
+      (box
+        :class "power-logo-box"
+        :halign "center" :valign "center"
+        (label :class "power-logo-icon" :style "color: #1793D1;" :text "󰣇"))
+
+      ; Hostname — dalam box sendiri (seperti Box-Title di Figma)
+      (box
+        :class "power-host-box"
+        :hexpand true
+        :halign "start" :valign "center"
+        (label
+          :class "power-hostname"
+          :halign "center" :valign "center"
+          :truncate false
+          :text power_hostname))
+    )
+
+    ; --- Kanan: 4 tombol power action ---
+    (box
+      :class "power-actions-group"
+      :orientation "horizontal"
+      :spacing 5
+      :space-evenly false
+
+      ; Sleep
+      (power-btn
+        :icon "󰒲"
+        :tooltip "Sleep"
+        :action "scripts/power-menu/actions.sh sleep")
+
+      ; Logout
+      (power-btn
+        :icon "󰍃"
+        :tooltip "Logout"
+        :action "scripts/power-menu/actions.sh logout")
+
+      ; Reboot
+      (power-btn
+        :icon "󰜉"
+        :tooltip "Reboot"
+        :action "scripts/power-menu/actions.sh reboot")
+
+      ; Power Off
+      (power-btn
+        :icon "󰐥"
+        :tooltip "Power Off"
+        :action "scripts/power-menu/actions.sh poweroff")
+    )
+  )
+)

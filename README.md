@@ -49,6 +49,17 @@ Hyprland-based Wayland desktop environment configuration, themed with a custom d
 
 Full component details: [docs/components.md](./docs/components.md)
 
+## Shared Scripts
+
+Script lintas komponen di `collab-scripts/`:
+
+| Script | Fungsi | Dipakai |
+|--------|--------|---------|
+| `power-mode.sh` | Backend power profile: set `safe`/`balanced`/`performance` via `power-profiles-daemon` + signal waybar | Waybar onclick, EWW toggle |
+| `toggle-powermode.sh` (di `eww/scripts/`) | Frontend EWW: cycle tampilan + panggil `power-mode.sh` sync backend | EWW quick-settings card |
+
+Arsitektur: EWW card ↔ `toggle-powermode.sh` (frontend cycle) → `power-mode.sh` (backend DBus) → `powerprofilesctl` → waybar signal.
+
 ## Installation
 
 ### Prerequisites
@@ -83,7 +94,7 @@ sudo pacman -S grim slurp imagemagick
 sudo pacman -S wireplumber pamixer playerctl
 
 # Hardware control
-sudo pacman -S brightnessctl
+sudo pacman -S brightnessctl power-profiles-daemon
 
 # Network and Bluetooth
 sudo pacman -S networkmanager nm-connection-editor blueman
@@ -141,7 +152,7 @@ Full dependency map: [docs/dependencies.md](./docs/dependencies.md)
 | UI | waybar, eww, rofi, swaync, wlogout |
 | Shell | fish, kitty, starship, fastfetch |
 | Media | wireplumber, pamixer, playerctl |
-| Hardware | brightnessctl, networkmanager, blueman |
+| Hardware | brightnessctl, networkmanager, blueman, power-profiles-daemon |
 | Clipboard | cliphist, wl-clipboard |
 | Screenshot | grim, slurp, imagemagick |
 | Tools | jq, curl, polkit-kde-agent |

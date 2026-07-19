@@ -19,7 +19,7 @@
 /* ---------- Control Center ---------- */
 
 .control-center {
-  background: alpha(@bg, 0.50);
+  background: alpha(@bg, 0.90);
   color: @fg;
   border-radius: 5px;
   border: 1px solid alpha(@fg2, 0.12);
@@ -257,7 +257,7 @@
   font-size: 11px;
 }
 
-/* Group close & view buttons — posisi kanan */
+/* Group close & view buttons — posisi kanan, style menyatu dgn header */
 .notification-group .notification-group-close-button {
   margin-left: auto;
 }
@@ -266,13 +266,13 @@
   min-width: 18px;
   min-height: 18px;
   margin: 0 2px;
-  background: alpha(@bg, 0.12);
+  background: transparent;
   color: @bg;
   border-radius: 100%;
 }
 
 .notification-group .notification-group-close-button .close-button:hover {
-  background: alpha(@bg, 0.25);
+  background: alpha(@bg, 0.18);
 }
 
 .notification-group .notification-group-buttons {
@@ -285,13 +285,13 @@
   padding: 2px 10px;
   font-size: 10px;
   border-radius: 4px;
-  background: alpha(@bg, 0.12);
+  background: transparent;
   color: @bg;
   border: none;
 }
 
 .notification-group .notification-group-buttons button:hover {
-  background: alpha(@bg, 0.25);
+  background: alpha(@bg, 0.18);
 }
 
 /* Override collapsed state — tampilkan semua notifikasi */
