@@ -4,7 +4,6 @@
    ========================= */
 
 @define-color bg #1a1a26;
-@define-color bg2 #1a1a26;
 @define-color surface-dark #11111b;
 @define-color border #474540;
 @define-color fg #d5c89a;
@@ -19,15 +18,12 @@
 /* ---------- Control Center ---------- */
 
 .control-center {
-  background: alpha(@bg, 0.90);
+  background: @bg;
   color: @fg;
   border-radius: 5px;
-  border: 1px solid alpha(@fg2, 0.12);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3),
-              0 4px 16px 4px rgba(0, 0, 0, 0.5);
+  border: 0.5px solid @border;
 }
 
-/* Hilangkan focus outline di semua elemen */
 .control-center *:focus,
 .control-center *:focus-visible,
 .notification-row:focus,
@@ -48,56 +44,42 @@
 .notification-row:focus,
 .notification-row:focus-visible {
   outline: none;
-  background: @bg2;
+  background: transparent;
   border-radius: 5px;
   box-shadow: none;
-}
-
-.notification-row:focus {
-  background: transparent;
-  outline: none;
-  box-shadow: none;
+  margin: 5px 0;
 }
 
 .notification-row .notification-background {
   background: transparent;
-  padding: 1px;
-  outline: none;
-}
-
-.notification-row .notification-background:focus {
-  outline: none;
-  box-shadow: none;
+  padding: 0;
 }
 
 .notification-row .notification-background .notification {
   border-radius: 5px;
-  border: 1px solid alpha(@fg2, 0.10);
-  background: @bg2;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  border: 0.5px solid @border;
+  background: @surface-dark;
   padding: 0;
-  transition: all 0.2s ease;
-  outline: none;
+  transition: background 150ms ease;
 }
 
 .notification-row .notification-background .notification:hover {
-  background: alpha(@bg2, 0.82);
-  border-color: alpha(@fg2, 0.18);
+  background: #1e1e2e;
 }
 
 .notification-row .notification-background .notification.critical {
-  border-color: alpha(@fg2, 0.10);
+  border-color: @border;
 }
 
 /* ---------- Default action area ---------- */
 
 .notification-default-action {
-  padding: 4px;
+  padding: 2px 4px;
   margin: 0;
   background: transparent;
   border: none;
   color: @fg;
-  transition: all 0.18s ease;
+  transition: background 150ms ease;
   border-radius: 5px;
 }
 
@@ -115,22 +97,22 @@
 .notification-content {
   background: transparent;
   border-radius: 5px;
-  padding: 4px;
+  padding: 1px 4px;
 }
 
 .notification-content .image {
-  -gtk-icon-size: 52px;
+  -gtk-icon-size: 44px;
   border-radius: 100px;
-  margin: 4px;
+  margin: 2px 4px 2px 2px;
 }
 
 .notification-content .app-icon {
-  -gtk-icon-size: 18px;
-  margin: 6px;
+  -gtk-icon-size: 16px;
+  margin: 2px;
 }
 
 .notification-content .text-box .summary {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: bold;
   color: @fg;
   background: transparent;
@@ -138,15 +120,15 @@
 }
 
 .notification-content .text-box .time {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: normal;
   color: @fg2;
   background: transparent;
-  margin-right: 30px;
+  margin-right: 20px;
 }
 
 .notification-content .text-box .body {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: normal;
   color: @fg2;
   background: transparent;
@@ -155,39 +137,38 @@
 /* ---------- Close button ----------- */
 
 .close-button {
-  background: alpha(@fg2, 0.10);
+  background: transparent;
   color: @fg2;
   border-radius: 100%;
-  min-width: 24px;
-  min-height: 24px;
-  margin-top: 6px;
-  margin-right: 6px;
+  min-width: 16px;
+  min-height: 16px;
+  margin-top: 3px;
+  margin-right: 3px;
   padding: 0;
   border: none;
-  box-shadow: none;
-  text-shadow: none;
+  transition: background 150ms ease;
 }
 
 .close-button:hover {
   background: alpha(@accent, 0.25);
   color: @fg;
-  transition: all 0.18s ease;
 }
 
 /* ---------- Action buttons ---------- */
 
 .notification-action {
-  margin: 4px;
+  margin: 2px 4px;
   padding: 0;
 }
 
 .notification-action > button {
-  border-radius: 8px;
+  border-radius: 5px;
   color: @fg;
   background: alpha(@fg2, 0.08);
   border: none;
-  padding: 6px 10px;
-  transition: all 0.18s ease;
+  padding: 2px 8px;
+  font-size: 11px;
+  transition: background 150ms ease;
 }
 
 .notification-action > button:hover {
@@ -204,19 +185,19 @@
 .inline-reply .inline-reply-entry {
   background: alpha(@bg, 0.8);
   color: @fg;
-  border: 1px solid alpha(@fg2, 0.12);
-  border-radius: 8px;
-  padding: 6px 8px;
+  border: 0.5px solid @border;
+  border-radius: 5px;
+  padding: 4px 8px;
   caret-color: @accent;
 }
 
 .inline-reply .inline-reply-button {
   background: alpha(@accent, 0.15);
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   color: @accent;
   margin-left: 4px;
-  padding: 6px 12px;
+  padding: 4px 12px;
 }
 
 .inline-reply .inline-reply-button:hover {
@@ -229,35 +210,31 @@
 }
 
 /* ---------- Notification groups ---------- */
-/* Grouping disabled — semua notifikasi selalu terlihat individual */
 
 .notification-group {
   background: transparent;
 }
 
-.notification-group:focus {
-  background: transparent;
-}
-
 .notification-group .notification-group-headers {
-  background: @fg;
-  color: @bg;
-  margin: 10px 0 10px 0;
-  padding: 6px 10px;
+  background: @surface-dark;
+  color: @fg;
+  margin: 10px 0 12px 0;
+  padding: 8px 15px;
   border-radius: 5px;
+  border-bottom: none;
 }
 
 .notification-group .notification-group-headers .notification-group-icon {
-  color: @bg;
+  color: @accent;
   -gtk-icon-size: 16px;
+  margin-right: 6px;
 }
 
 .notification-group .notification-group-headers .notification-group-header {
-  color: @bg;
+  color: @fg;
   font-size: 11px;
 }
 
-/* Group close & view buttons — posisi kanan, style menyatu dgn header */
 .notification-group .notification-group-close-button {
   margin-left: auto;
 }
@@ -266,13 +243,14 @@
   min-width: 18px;
   min-height: 18px;
   margin: 0 2px;
-  background: transparent;
-  color: @bg;
-  border-radius: 100%;
+  background: @surface-dark;
+  color: @fg;
+  border-radius: 5px;
+  transition: background 150ms ease;
 }
 
 .notification-group .notification-group-close-button .close-button:hover {
-  background: alpha(@bg, 0.18);
+  background: alpha(@accent, 0.25);
 }
 
 .notification-group .notification-group-buttons {
@@ -282,21 +260,22 @@
 .notification-group .notification-group-buttons button {
   min-width: auto;
   min-height: 18px;
-  padding: 2px 10px;
+  padding: 4px 10px;
   font-size: 10px;
-  border-radius: 4px;
-  background: transparent;
-  color: @bg;
+  border-radius: 5px;
+  background: @surface-dark;
+  color: @fg;
   border: none;
+  transition: background 150ms ease;
 }
 
 .notification-group .notification-group-buttons button:hover {
-  background: alpha(@bg, 0.18);
+  background: alpha(@accent, 0.25);
 }
 
-/* Override collapsed state — tampilkan semua notifikasi */
+/* Override collapsed state */
 .notification-group.collapsed .notification-row .notification {
-  background: @bg2;
+  background: @surface-dark;
 }
 
 .notification-group.collapsed .notification-row:not(:last-child) .notification-action,
@@ -319,7 +298,7 @@
 }
 
 .floating-notifications .notification {
-  box-shadow: 0 2px 8px 2px rgba(0, 0, 0, 0.4);
+  border: 0.5px solid @border;
 }
 
 /* ---------- Blank window ---------- */
@@ -350,14 +329,14 @@ blankwindow {
 /* ---------- Widgets ---------- */
 
 .widget {
-  margin: 0 8px;
+  margin: 0 6px;
   padding: 2px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 
 /* Title widget */
 .widget-title {
-  margin: 0 8px;
+  margin: 0 6px;
   padding: 1px 10px;
 }
 
@@ -369,24 +348,28 @@ blankwindow {
 }
 
 .widget-title > button {
-  background: alpha(@fg2, 0.10);
-  color: @fg2;
-  border-radius: 8px;
+  background: @surface-dark;
+  color: @fg;
+  border: 0.5px solid @border;
+  border-radius: 5px;
   margin-left: 8px;
   padding: 4px 10px;
+  transition: background 150ms ease;
 }
 
 .widget-title > button:hover {
   background: alpha(@accent, 0.20);
   color: @accent;
+  border-color: @accent;
 }
 
 /* DND widget */
 .widget-dnd {
-  margin: 0 8px;
-  padding: 1px 10px;
+  margin: 0 6px 6px 6px;
+  padding: 6px 10px;
   border-radius: 5px;
-  background: @bg2;
+  background: @surface-dark;
+  border: 0.5px solid @border;
 }
 
 .widget-dnd > label {
@@ -404,7 +387,7 @@ blankwindow {
   margin-top: 5px;
   margin-bottom: 5px;
   min-width: 32px;
-  min-height/re: 16px;
+  min-height: 16px;
   font-size: 0;
 }
 
@@ -416,10 +399,8 @@ blankwindow {
   border-radius: 100px;
   background: @fg;
   box-shadow: none;
-
   min-width: 10px;
   min-height: 10px;
-
 }
 
 /* Label widget */
@@ -437,26 +418,27 @@ blankwindow {
 }
 
 .widget-inhibitors > button {
-  background: alpha(@accent, 0.15);
+  background: @surface-dark;
   color: @accent;
-  border-radius: 8px;
+  border: 0.5px solid @border;
+  border-radius: 5px;
   margin-left: 8px;
   padding: 4px 10px;
-  border: none;
+  transition: background 150ms ease;
 }
 
 .widget-inhibitors > button:hover {
-  background: alpha(@accent, 0.28);
+  background: alpha(@accent, 0.20);
 }
 
 /* Buttons grid widget */
 .widget-buttons-grid flowboxchild > button {
-  background: alpha(@bg2, 0.8);
+  background: @surface-dark;
   color: @fg;
-  border-radius: 10px;
-  border: 1px solid alpha(@fg2, 0.10);
+  border-radius: 5px;
+  border: 0.5px solid @border;
   padding: 8px;
-  transition: all 0.18s ease;
+  transition: background 150ms ease;
 }
 
 .widget-buttons-grid flowboxchild > button:hover {
@@ -473,17 +455,17 @@ blankwindow {
 /* Mpris widget */
 .widget-mpris .widget-mpris-player {
   margin: 12px 16px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  border: 0.5px solid @border;
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay {
   padding: 14px;
-  background-color: alpha(@bg, 0.75);
+  background-color: @surface-dark;
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
-  border-radius: 8px;
+  border-radius: 5px;
   -gtk-icon-size: 96px;
 }
 
@@ -500,15 +482,6 @@ blankwindow {
 
 .widget-mpris .widget-mpris-player .mpris-overlay button:hover {
   background: alpha(@accent, 0.18);
-}
-
-/* ---------- DND widget ---------- */
-
-.widget-dnd {
-  margin: 8px;
-  padding: 6px 10px;
-  border-radius: 5px;
-  background: @bg2;
 }
 
 /* Volume / Backlight sliders */
