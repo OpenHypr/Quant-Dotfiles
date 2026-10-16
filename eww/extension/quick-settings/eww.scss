@@ -1,0 +1,191 @@
+// ============================================================
+// Extension: Quick Settings — control panel + power bar styles
+// Merge dari _quick-settings.scss + _power-menu.scss
+// ============================================================
+
+// ============================================================
+// Shared base styles (inlined — extension fully self-contained)
+// ============================================================
+
+// --- Colors ---
+$bg: rgba(26, 26, 38, 0.55);
+$bg-solid: #1a1a26;
+$surface-dark: #11111b;
+$border: #474540;
+$fg: #d5c89a;
+$fg-50: rgba(213, 200, 154, 0.5);
+$accent: #89b4fa;
+$accent-50: rgba(137, 180, 250, 0.5);
+$bar-bg: #555555;
+
+// --- Variables ---
+$font-family: "JetBrainsMono Nerd Font";
+$font-size-base: 10px;
+$border-radius: 5px;
+$padding-default: 8px 12px;
+
+// --- Base Reset ---
+* {
+  all: unset;
+  font-family: $font-family;
+  font-size: $font-size-base;
+}
+
+.popup {
+  background: $bg-solid;
+  border: 0.5px solid $border;
+  border-radius: $border-radius;
+  padding: $padding-default;
+}
+
+// ============================================================
+// Quick Settings Container
+// ============================================================
+
+.qs-container {
+  padding: 4px 10px 10px 10px;
+}
+
+// ============================================================
+// Card — wrapper box + main button
+// ============================================================
+
+.qs-card {
+  margin: 0px 2px;
+}
+
+.qs-card-main {
+  background: $surface-dark;
+  border-radius: $border-radius;
+  min-height: 56px;
+  min-width: 185px;
+  padding: 0;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: #1e1e2e;
+  }
+}
+
+// Icon box — compact 36×36
+.qs-icon-box {
+  background: $bg-solid;
+  border-radius: $border-radius;
+  min-width: 36px;
+  min-height: 36px;
+  margin: 10px 8px 10px 8px;
+}
+
+.qs-icon {
+  font-size: 15px;
+  font-family: $font-family;
+}
+
+// Kolom teks
+.qs-text-col {
+  margin: 10px 0 10px 0;
+}
+
+.qs-title {
+  color: $fg;
+  font-size: 10px;
+  font-family: $font-family;
+  font-weight: 300;
+}
+
+.qs-status {
+  color: #e5e5e5;
+  font-size: 9px;
+  font-family: $font-family;
+  font-weight: 300;
+}
+
+// Settings gear — overlay di kanan card
+.qs-settings-btn {
+  all: unset;
+  background: $bg-solid;
+  color: $fg;
+  font-size: 12px;
+  padding: 0 10px 0 8px;
+  margin: 0 10px 0 0;
+  min-height: 28px;
+  border-radius: 5px;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: $accent;
+    color: $bg-solid;
+
+    .qs-settings-icon {
+      color: $bg-solid;
+    }
+  }
+}
+
+.qs-settings-icon {
+  all: unset;
+  color: $fg;
+  font-size: 12px;
+}
+
+// ============================================================
+// Header Bar — top row: logo + hostname + 4 action button
+// ============================================================
+
+.header-bar {
+  padding: 0 0px 10px 0px;
+  border-bottom: 1px solid $border;
+  min-height: 0px;
+}
+
+.header-logo {
+  background: $surface-dark;
+  border-radius: $border-radius;
+  padding: 5px 15px;
+  margin-left: 2px;
+
+  label {
+    color: #1793D1;
+    font-size: 15px;
+    font-family: $font-family;
+    margin-right: 2px;
+  }
+}
+
+.header-hostname {
+  background: $surface-dark;
+  border-radius: $border-radius;
+  padding: 5px 20px;
+
+  label {
+    color: $fg;
+    font-size: 11px;
+    font-family: $font-family;
+    font-weight: 400;
+  }
+}
+
+.header-btn {
+  all: unset;
+  background: $surface-dark;
+  border-radius: $border-radius;
+  padding: 5px 13px;
+  transition: background 150ms ease;
+  margin-right: 2px;
+
+  &:hover {
+    background: $accent;
+
+    .header-btn-icon {
+      color: $bg-solid;
+    }
+  }
+}
+
+.header-btn-icon {
+  color: $fg;
+  font-size: 12px;
+  font-family: $font-family;
+  transition: color 150ms ease;
+  margin-right: 1px;
+}

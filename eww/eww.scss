@@ -1,12 +1,9 @@
 // ============================================================
-// EWW SCSS Entry Point — import semua modul di sini
+// EWW SCSS Entry Point — extension styles aja
 // NOTE: pakai @import, bukan @use (grass compiler EWW ga support @use)
 // ============================================================
 
-@import "styles/colors";
-@import "styles/variables";
-
-@import "styles/popup";
-@import "styles/osd";
-@import "styles/mixer";
-@import "styles/quick-settings";
+@import "extension/osd/eww";
+@import "extension/mixer/eww";
+@import "extension/mic/eww";
+@import "extension/quick-settings/eww";

@@ -100,7 +100,7 @@
     "wireplumber": {
         "format": "󰍬 {volume}%",
         "tooltip": false,
-        "on-click": "/home/xuanz/.config/eww/scripts/mixer/toggle-mic.sh",
+        "on-click": "/home/xuanz/.config/eww/extension/mic/scripts/toggle-mic.sh",
         "on-click-middle": "",
         "on-click-right": ""
     },
@@ -109,7 +109,7 @@
         "format": "󰕾 {volume}%",
         "format-muted": "󰝟 muted",
         "tooltip": false,
-        "on-click": "/home/xuanz/.config/eww/scripts/mixer/toggle-window.sh",
+        "on-click": "/home/xuanz/.config/eww/extension/mixer/scripts/toggle-window.sh",
         "on-click-middle": "",
         "on-click-right": ""
     },
@@ -176,11 +176,10 @@
     },
 
     "custom/power-mode": {
-        "exec": "~/.config/collab-scripts/power-mode.sh icon",
+        "exec": "~/.config/eww/extension/quick-settings/scripts/power-mode.sh icon",
         "format": "{}",
         "tooltip": false,
-        "interval": "once",
-        "signal": 5,
-        "on-click": "~/.config/collab-scripts/power-mode.sh cycle"
+        "interval": 3,
+        "on-click": ""
     }
 }

@@ -2,6 +2,8 @@
 
 !hypr/
 !hypr/**
+!hypr-lua/
+!hypr-lua/**
 
 !fastfetch/
 !fastfetch/**
@@ -34,9 +36,6 @@
 
 !swaync/
 !swaync/**
-
-!collab-scripts/
-!collab-scripts/**
 
 !.gitignore
 !README.md

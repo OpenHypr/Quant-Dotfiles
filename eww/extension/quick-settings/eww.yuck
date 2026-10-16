@@ -1,0 +1,251 @@
+; ============================================================
+; Extension: Quick Settings — control panel 2-kolom compact
+; Includes: header-bar (power actions), toggle cards, hostname
+; ============================================================
+
+; --- Warna referensi ---
+(defvar qs_color_default "#e3e3e3")
+(defvar qs_color_fg "#d5c89a")
+(defvar qs_color_accent "#89b4fa")
+(defvar qs_color_green "#98c379")
+
+; --- Variabel state toggle ---
+; WiFi via deflisten — watcher native baca state NetworkManager
+(deflisten qs_wifi :initial "off" "extension/quick-settings/scripts/watch-wifi.sh")
+
+; Bluetooth via deflisten — watcher native baca bluetoothctl
+(deflisten qs_bluetooth :initial "off" "extension/quick-settings/scripts/watch-bluetooth.sh")
+
+; Tethering via deflisten — watcher baca koneksi aktif "Hotspot" di NetworkManager
+(deflisten qs_tethering :initial "off" "extension/quick-settings/scripts/watch-tethering.sh")
+
+(defvar qs_airplane "off")
+(defvar qs_nightlight "off")
+(defvar qs_dnd "off")
+
+; Power Mode
+(deflisten qs_powermode :initial "balanced" "extension/quick-settings/scripts/watch-powermode.sh")
+
+(defvar qs_theme "dark")
+
+; Power Bar — hostname untuk identitas panel di atas QS
+(deflisten power_hostname :initial "xuanz@archlinux" "extension/quick-settings/scripts/watch-hostname.sh")
+
+; ============================================================
+; Widget: Card Components
+; ============================================================
+
+; --- Konten dalam card ---
+(defwidget qs-card-inner [icon icon_color title status]
+  (box
+    :orientation "horizontal"
+    :spacing 0
+    :space-evenly false
+    (box
+      :class "qs-icon-box"
+      :width 36 :height 36
+      :halign "center" :valign "center"
+      (label :class "qs-icon" :style "color: ${icon_color};" :text icon))
+    (box
+      :class "qs-text-col"
+      :orientation "vertical" :spacing 2
+      :hexpand true
+      (label :class "qs-title" :halign "start" :truncate true :text title)
+      (label :class "qs-status" :halign "start" :truncate true :text status))
+  )
+)
+
+; --- Satu card toggle ---
+(defwidget qs-card [icon title status card_onclick settings_onclick gear_visible icon_color ?card_onrightclick]
+  (box
+    :class "qs-card"
+    :hexpand true
+    :orientation "horizontal"
+    :spacing 0
+    :space-evenly false
+
+    ; CABANG A: Dengan gear (overlay) — gear_visible == true
+    (overlay
+      :visible "${gear_visible == 'true'}"
+      (button
+        :class "qs-card-main"
+        :hexpand true
+        :onclick card_onclick
+        :onrightclick {card_onrightclick ?: ""}
+        (qs-card-inner :icon icon :icon_color icon_color :title title :status status))
+      (button
+        :class "qs-settings-btn"
+        :halign "end"
+        :valign "center"
+        :onclick settings_onclick
+        (label :class "qs-settings-icon" :text "󰒓"))
+    )
+
+    ; CABANG B: Tanpa gear (plain button) — gear_visible != true
+    (button
+      :visible "${gear_visible != 'true'}"
+      :class "qs-card-main"
+      :hexpand true
+      :onclick card_onclick
+      :onrightclick {card_onrightclick ?: ""}
+      (qs-card-inner :icon icon :icon_color icon_color :title title :status status))
+  )
+)
+
+; ============================================================
+; Widget: Header Bar (Power Actions)
+; ============================================================
+
+(defwidget header-bar []
+  (box
+    :class "header-bar"
+    :orientation "horizontal"
+    :spacing 5
+    :space-evenly false
+    :valign "center"
+
+    ; --- Kiri: Logo + Hostname ---
+    (box
+      :orientation "horizontal"
+      :spacing 5
+      :space-evenly false
+      (box
+        :class "header-logo"
+        :halign "center" :valign "center"
+        (label :style "color: #1793D1;" :text "󰣇"))
+      (box
+        :class "header-hostname"
+        :halign "center" :valign "center"
+        (label :truncate false :text power_hostname)))
+
+    ; --- Spacer ---
+    (box :hexpand true)
+
+    ; --- Kanan: 4 tombol power ---
+    (box
+      :orientation "horizontal"
+      :spacing 5
+      :space-evenly false
+      :halign "end"
+      (button
+        :class "header-btn"
+        :tooltip "Sleep"
+        :onclick "extension/quick-settings/scripts/actions.sh sleep"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰒲"))
+      (button
+        :class "header-btn"
+        :tooltip "Logout"
+        :onclick "extension/quick-settings/scripts/actions.sh logout"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰍃"))
+      (button
+        :class "header-btn"
+        :tooltip "Reboot"
+        :onclick "extension/quick-settings/scripts/actions.sh reboot"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰜉"))
+      (button
+        :class "header-btn"
+        :tooltip "Power Off"
+        :onclick "extension/quick-settings/scripts/actions.sh poweroff"
+        :halign "center" :valign "center"
+        (label :class "header-btn-icon" :text "󰐥"))
+    )
+  )
+)
+
+; ============================================================
+; Widget: Grid & Content
+; ============================================================
+
+(defwidget qs-grid []
+  (box :class "qs-grid" :orientation "vertical" :spacing 6
+
+    (header-bar)
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 2
+
+      (qs-card :icon "${qs_wifi == 'off' ? '󰖪' : qs_wifi == 'on' ? '󰖩' : qs_wifi == '●' ? '󱛇' : qs_wifi == '● ●' ? '󱛇' : qs_wifi == '● ● ●' ? '󱛇' : '󱚻'}" :title "Wi-Fi"
+        :status "${qs_wifi == 'off' ? 'Off' : qs_wifi == 'on' ? 'On' : qs_wifi}"
+        :card_onclick "extension/quick-settings/scripts/toggle-wifi.sh"
+        :settings_onclick "nm-connection-editor &" :gear_visible "true"
+        :icon_color "${qs_wifi == 'off' ? qs_color_default : qs_wifi == 'on' ? qs_color_fg : qs_color_accent}")
+
+      ; Wifi Tethering
+      (qs-card :icon "${qs_tethering == '●' ? '󰓦' : qs_tethering == '● ●' ? '󰓦' : qs_tethering == '● ● ●' ? '󰓦' : qs_tethering == 'on' ? '󰀃' : '󱔑'}" :title "Wifi Tethering"
+        :status "${qs_tethering == '●' ? '●' : qs_tethering == '● ●' ? '● ●' : qs_tethering == '● ● ●' ? '● ● ●' : qs_tethering == 'on' ? 'On' : 'Off'}"
+        :card_onclick "extension/quick-settings/scripts/toggle-tethering.sh"
+        :settings_onclick "" :gear_visible "true"
+        :icon_color "${qs_tethering == 'on' ? qs_color_accent : qs_color_default}"))
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 2
+
+      (qs-card :icon "󰂯" :title "Bluetooth"
+        :status "${qs_bluetooth == 'off' ? 'Off' : qs_bluetooth == 'on' ? 'On' : qs_bluetooth}"
+        :card_onclick "extension/quick-settings/scripts/toggle-bluetooth.sh"
+        :card_onrightclick "extension/quick-settings/scripts/toggle-blueman.sh"
+        :settings_onclick "extension/quick-settings/scripts/toggle-blueman.sh" :gear_visible "true"
+        :icon_color "${qs_bluetooth == 'off' ? qs_color_default : qs_bluetooth == 'on' ? qs_color_fg : qs_color_accent}")
+
+      (qs-card :icon "${qs_airplane == 'on' ? '󰀝' : '󰀞'}" :title "Airplane Mode"
+        :status "${qs_airplane == 'on' ? 'On' : 'Off'}"
+        :card_onclick "extension/quick-settings/scripts/toggle-airplane.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_airplane == 'on' ? qs_color_accent : qs_color_default}"))
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 2
+
+      (qs-card :icon "${qs_powermode == 'safe' ? '' : qs_powermode == 'balanced' ? '' : ''}" :title "Power Mode"
+        :status "${qs_powermode == 'safe' ? 'Safe' : qs_powermode == 'balanced' ? 'Balanced' : 'Performance'}"
+        :card_onclick "extension/quick-settings/scripts/toggle-powermode.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_powermode == 'safe' ? qs_color_green : qs_powermode == 'balanced' ? qs_color_fg : qs_color_accent}")
+
+      ; Night Light: cycle off → 25% → 50% → 75% → 100% → off
+      (qs-card :icon "󰛨" :title "Night Light"
+        :status "${qs_nightlight == 'off' ? 'Off' : qs_nightlight}"
+        :card_onclick "extension/quick-settings/scripts/toggle-nightlight.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_nightlight == 'off' ? qs_color_default : qs_color_accent}"))
+
+    (box :class "qs-row" :orientation "horizontal" :spacing 2
+
+      (qs-card :icon "󰂛" :title "DND Mode"
+        :status "${qs_dnd == 'on' ? 'Silent' : 'Normal'}"
+        :card_onclick "extension/quick-settings/scripts/toggle-dnd.sh"
+        :settings_onclick "" :gear_visible "false"
+        :icon_color "${qs_dnd == 'on' ? qs_color_accent : qs_color_default}")
+
+      (qs-card :icon "󰔎" :title "Theme"
+        :status "${qs_theme == 'dark' ? 'Dark' : 'Light'}"
+        :card_onclick "extension/quick-settings/scripts/toggle-theme.sh"
+        :settings_onclick "extension/quick-settings/scripts/toggle-theme.sh" :gear_visible "true"
+        :icon_color "${qs_theme == 'dark' ? qs_color_default : qs_color_fg}"))
+  )
+)
+
+(defwidget qs-content []
+  (box :class "qs-container popup" :orientation "vertical" :spacing 0 :halign "fill"
+    (qs-grid)))
+
+; ============================================================
+; Window
+; ============================================================
+
+(defwindow quick-settings
+  :monitor 0
+  :geometry (geometry
+    :x "5"
+    :y "5"
+    :width "402"
+    :height "298"
+    :anchor "top right"
+  )
+  :stacking "overlay"
+  :namespace "quick-settings"
+  :windowtype "dock"
+  :focusable false
+
+  (qs-content)
+)

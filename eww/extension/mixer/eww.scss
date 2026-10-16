@@ -1,0 +1,135 @@
+// ============================================================
+// Extension: Volume Mixer — per-application audio control styles
+// ============================================================
+
+// ============================================================
+// Shared base styles (inlined — extension fully self-contained)
+// ============================================================
+
+// --- Colors ---
+$bg: rgba(26, 26, 38, 0.55);
+$bg-solid: #1a1a26;
+$surface-dark: #11111b;
+$border: #474540;
+$fg: #d5c89a;
+$fg-50: rgba(213, 200, 154, 0.5);
+$accent: #89b4fa;
+$accent-50: rgba(137, 180, 250, 0.5);
+$bar-bg: #555555;
+
+// --- Variables ---
+$font-family: "JetBrainsMono Nerd Font";
+$font-size-base: 10px;
+$border-radius: 5px;
+$padding-default: 8px 12px;
+
+// --- Base Reset ---
+* {
+  all: unset;
+  font-family: $font-family;
+  font-size: $font-size-base;
+}
+
+.popup {
+  background: $bg-solid;
+  border: 0.5px solid $border;
+  border-radius: $border-radius;
+  padding: $padding-default;
+}
+
+.mixer-container {
+  min-width: 270px;
+  padding: 10px 15px;
+}
+
+// Header — centerbox, always fills full width
+.mixer-header {
+  background: $fg;
+  border-radius: 5px;
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.mixer-title {
+  color: rgba(26, 26, 38, 0.9);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+// Setiap entry aplikasi
+.mixer-entry {
+  padding: 0px 0;
+}
+
+// Icon aplikasi
+.mixer-icon {
+  color: $accent;
+  font-size: 15px;
+}
+
+// Nama aplikasi
+.mixer-name {
+  color: $fg;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+// Volume persentase
+.mixer-volume-text {
+  color: $fg;
+  font-size: 10px;
+  font-weight: 600;
+
+  &.muted {
+    color: rgba(213, 200, 154, 0.45); // $fg di-reduce opacity
+    font-size: 9px;
+    font-weight: 700;
+  }
+}
+
+// Mute button
+.mixer-mute-btn {
+  color: $fg;
+  font-size: 12px;
+  padding: 0;
+
+  .mixer-mute-icon.muted {
+    color: #e06c75; // merah — indikasi muted
+  }
+}
+
+// Native scale slider
+.mixer-slider {
+  margin-top: 4px;
+  margin-right: 10px;
+  margin-left: 10px;
+  min-height: 12px;
+
+  trough {
+    background: $bar-bg;
+    border-radius: 2px;
+    min-height: 4px;
+    margin: 4px 0;
+  }
+
+  highlight {
+    background: $accent;
+    border-radius: 2px;
+  }
+
+  slider {
+    background: $fg;
+    border-radius: 2%;
+    min-width: 15px;
+    min-height: 15px;
+  }
+
+  &.muted {
+    highlight {
+      background: $bar-bg;
+    }
+    slider {
+      background: #888888;
+    }
+  }
+}

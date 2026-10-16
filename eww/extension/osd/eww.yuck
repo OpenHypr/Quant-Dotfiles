@@ -1,0 +1,77 @@
+; ============================================================
+; Extension: OSD — Volume & Brightness popup
+; ============================================================
+
+; --- Shared Widget (inlined dari widgets/common/progress_bar.yuck) ---
+(defwidget progress-bar [value height]
+  (box
+    :class "osd-bar"
+    :hexpand true
+    :height height
+    :valign "center"
+    :style "background: linear-gradient(
+      to right,
+      #89b4fa 0%,
+      #89b4fa ${value}%,
+      rgba(26,26,38,0.65) ${value}%
+    ); border-radius: 2px;"
+  )
+)
+
+; --- Variabel ---
+(defvar osd_icon "")
+(defvar osd_value "0")
+(defvar osd_progress "0")
+
+; --- Widget ---
+(defwidget osd-content []
+  (box
+    :class "osd-container popup"
+    :orientation "horizontal"
+    :spacing 0
+    :halign "center"
+    :valign "center"
+
+    ; Kiri: [icon] [persentase]
+    (box
+      :orientation "horizontal"
+      :spacing 1
+      :halign "start"
+      :valign "left"
+
+      (label
+        :class "osd-icon"
+        :text "${osd_icon}"
+        :width 1
+      )
+
+      (label
+        :class "osd-value"
+        :text "${osd_value}%"
+        :width 30
+        :wrap false
+      )
+    )
+
+    ; Kanan: progress bar (shared widget dari root)
+    (progress-bar :value osd_progress :height 10)
+  )
+)
+
+; --- Window ---
+(defwindow osd
+  :monitor 0
+  :geometry (geometry
+    :x "50%"
+    :y "5"
+    :width "240"
+    :height "1"
+    :anchor "bottom center"
+  )
+  :stacking "overlay"
+  :namespace "osd"
+  :windowtype "dock"
+  :focusable false
+
+  (osd-content)
+)

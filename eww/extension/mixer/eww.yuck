@@ -1,0 +1,111 @@
+; ============================================================
+; Extension: Volume Mixer — kontrol volume per-aplikasi (PipeWire)
+; ============================================================
+
+; --- Variabel ---
+(deflisten mixer_data :initial "{\"master\":{\"index\":\"master\",\"app_name\":\"System\",\"mute\":false,\"volume\":0,\"icon\":\"󰕾\"},\"apps\":[]}" "extension/mixer/scripts/watch.sh")
+
+; --- Widget: satu entry aplikasi ---
+(defwidget mixer-entry [app]
+  (box
+    :class "mixer-entry"
+    :orientation "vertical"
+    :spacing 4
+
+    ; Baris atas: icon + nama app + volume text + mute button
+    (box
+      :class "mixer-entry-header"
+      :orientation "horizontal"
+      :spacing 8
+      :halign "fill"
+
+      ; Icon
+      (label
+        :class "mixer-icon"
+        :text "${app.icon}"
+        :width 22
+      )
+
+      ; Nama aplikasi
+      (label
+        :class "mixer-name"
+        :text "${app.app_name}"
+        :wrap false
+        :hexpand true
+        :halign "start"
+      )
+
+      ; Volume text
+      (label
+        :class "${app.mute ? 'mixer-volume-text muted' : 'mixer-volume-text'}"
+        :text "${app.mute ? 'MUTED' : app.volume + '%'}"
+        :width 42
+        :wrap false
+      )
+
+      ; Mute toggle button
+      (button
+        :class "mixer-mute-btn"
+        :onclick "extension/mixer/scripts/toggle-mute.sh ${app.index}"
+        (label
+          :class "${app.mute ? 'mixer-mute-icon muted' : 'mixer-mute-icon'}"
+          :text "${app.mute ? '' : ''}"
+        )
+      )
+    )
+
+    ; Baris bawah: native scale slider (knob draggable)
+    (scale
+      :class "${app.mute ? 'mixer-slider muted' : 'mixer-slider'}"
+      :min 0
+      :max 100
+      :value "${app.volume}"
+      :onchange "extension/mixer/scripts/set-volume-exact.sh ${app.index} {}"
+    )
+  )
+)
+
+; --- Widget: konten utama mixer ---
+(defwidget mixer-content []
+  (box
+    :class "mixer-container popup"
+    :orientation "vertical"
+    :spacing 8
+    :halign "fill"
+    :valign "center"
+
+    ; Header bar
+    (centerbox
+      :class "mixer-header"
+      (box)
+      (label :class "mixer-title" :text "󰋋  Volume Mixer")
+      (box)
+    )
+
+    ; System volume — selalu tampil paling atas
+    (mixer-entry :app {mixer_data.master})
+
+    ; List aplikasi
+    (for app in {mixer_data.apps}
+      (mixer-entry :app app)
+    )
+  )
+)
+
+; --- Window ---
+(defwindow mixer
+  :monitor 0
+  :geometry (geometry
+    :x "5"
+    :y "5"
+    :width "402"
+    :height "1"
+    :anchor "top right"
+  )
+  :stacking "overlay"
+  :namespace "mixer"
+  :windowtype "dock"
+  :focusable false
+
+  (mixer-content)
+)

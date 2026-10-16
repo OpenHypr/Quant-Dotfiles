@@ -33,4 +33,6 @@ alias broo="~/.claude/claude.sh"
 
 # mimocode
 fish_add_path /home/xuanz/.mimocode/bin
+fish_add_path $HOME/.bun/bin
 set -gx PATH $HOME/.npm-global/bin $PATH
+alias tv-start='flatpak run com.tradingview.tradingview --remote-debugging-port=9222'

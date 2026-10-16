@@ -1,30 +1,9 @@
 ; ============================================================
 ; EWW Entry Point — jangan taruh widget di sini
-; Tambah modul baru tinggal include di bawah
 ; ============================================================
 
-; --- Variables ---
-(include "./variables/osd.yuck")
-
-; --- Common Widgets ---
-(include "./widgets/common/progress_bar.yuck")
-
-; --- OSD (Volume & Brightness) ---
-(include "./widgets/osd/osd_widget.yuck")
-(include "./widgets/osd/osd_window.yuck")
-
-; --- Volume Mixer ---
-(include "./variables/mixer.yuck")
-(include "./widgets/mixer/mixer_widget.yuck")
-(include "./widgets/mixer/mixer_window.yuck")
-
-; --- Mic Mixer ---
-(include "./variables/mic.yuck")
-(include "./widgets/mic/mic_widget.yuck")
-(include "./widgets/mic/mic_window.yuck")
-
-; --- Quick Settings ---
-(include "./variables/quick-settings.yuck")
-(include "./widgets/quick-settings/qs_widget.yuck")
-(include "./widgets/quick-settings/qs_window.yuck")
-
+; --- Extensions ---
+(include "./extension/quick-settings/eww.yuck")
+(include "./extension/osd/eww.yuck")
+(include "./extension/mixer/eww.yuck")
+(include "./extension/mic/eww.yuck")

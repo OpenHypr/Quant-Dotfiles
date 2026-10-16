@@ -1,4 +1,6 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export OPENROUTER_API_KEY:sk\x2dor\x2dv1\x2d6639da30ed98f912dfe795d40c2eaf1ab8f366976dab4a0f9e330fa9c862acec
+SETUVAR --export --path PATH:/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2emimocode/bin\x1e/home/xuanz/\x2elocal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/home/xuanz/\x2enpm\x2dglobal/bin\x1e/usr/local/sbin\x1e/usr/local/bin\x1e/usr/bin\x1e/var/lib/flatpak/exports/bin\x1e/usr/lib/jvm/default/bin\x1e/usr/bin/site_perl\x1e/usr/bin/vendor_perl\x1e/usr/bin/core_perl\x1e/usr/lib/rustup/bin\x1e/home/xuanz/\x2ebun/bin
 SETUVAR __fish_initialized:4300
-SETUVAR fish_user_paths:/home/xuanz/\x2emimocode/bin\x1e/home/xuanz/\x2elocal/bin
+SETUVAR fish_user_paths:/home/xuanz/development/flutter/bin\x1e/home/xuanz/\x2ebun/bin\x1e/home/xuanz/\x2emimocode/bin\x1e/home/xuanz/\x2elocal/bin

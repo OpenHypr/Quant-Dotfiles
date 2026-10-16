@@ -51,12 +51,7 @@ Full component details: [docs/components.md](./docs/components.md)
 
 ## Shared Scripts
 
-Script lintas komponen di `collab-scripts/`:
-
-| Script | Fungsi | Dipakai |
-|--------|--------|---------|
-| `power-mode.sh` | Backend power profile: set `safe`/`balanced`/`performance` via `power-profiles-daemon` + signal waybar | Waybar onclick, EWW toggle |
-| `toggle-powermode.sh` (di `eww/scripts/`) | Frontend EWW: cycle tampilan + panggil `power-mode.sh` sync backend | EWW quick-settings card |
+Semua script quick-settings self-contained di `eww/extension/quick-settings/scripts/` — tidak ada lagi folder `collab-scripts/` terpisah.
 
 Arsitektur: EWW card ↔ `toggle-powermode.sh` (frontend cycle) → `power-mode.sh` (backend DBus) → `powerprofilesctl` → waybar signal.
 
